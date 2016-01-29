@@ -10,8 +10,7 @@ public class GameMaster : MonoBehaviour {
 			GM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
 		}
 	}
-
-	public Transform enemyPrefab;
+    
 	public Transform playerPrefab;
 	public Transform spawnPoint;
 	public int spawnDelay = 2;
@@ -25,19 +24,13 @@ public class GameMaster : MonoBehaviour {
 		GameObject SpawnParticalClone = Instantiate (SpawnParticalPrefab, spawnPoint.position, spawnPoint.rotation) as GameObject;
 		Destroy (SpawnParticalClone, 3f);
 	}
-	public IEnumerator RespawnEnemys(){
-		yield return new WaitForSeconds (spawnDelay);
-		Instantiate (enemyPrefab, enemySpawn.position, enemySpawn.rotation);
-	}
+
 
 	public static void KillPlayer(PlayerStats player){
 		Destroy (player.gameObject);
 		GM.StartCoroutine (GM.RespawnPlayer ());
 	}
 
-	public static void KillEnemy(Enemy enemy) {
-		Destroy (enemy.gameObject);
-		GM.StartCoroutine (GM.RespawnEnemys ());
-	}
+
 
 }
