@@ -11,12 +11,14 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     public bool grounded = true;
     private Rigidbody2D rb;
+    public bool waitingToDie;
 
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        waitingToDie = false;
     }
 
     // Update is called once per frame
@@ -33,6 +35,10 @@ public class PlayerMovement : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
+        }
 
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -47,6 +53,11 @@ public class PlayerMovement : MonoBehaviour
             grounded = false;
         }
 
+        if (waitingToDie)
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            return;
+        }
         if (move)
         {
             GetComponent<Animator>().SetBool("IsIdle", false);

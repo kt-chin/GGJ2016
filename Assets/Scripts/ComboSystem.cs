@@ -92,6 +92,8 @@ public class ComboSystem : MonoBehaviour {
         }
 
         // We check if the accumulated string is the same as element combo
+        if (spells == null || spells.Count == 0)
+            GameMaster.randomizeSpells();
         if (spells.ContainsKey(key))
         {
             spells[key].Invoke();
@@ -130,6 +132,9 @@ public class ComboSystem : MonoBehaviour {
         }
         else
         {
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
+            
             Debug.Log("Failed Air Spell !");
             GameObject cloud = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x , 15.0f, 0.0f), new Quaternion());
             cloud.tag = "Obstacles";
