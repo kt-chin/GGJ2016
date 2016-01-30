@@ -40,7 +40,7 @@ public class PlatformGenerator : MonoBehaviour {
         if(obstacleProtection > 0)
         {
             if(obstacleProtection == 2)
-                CreateNormalPlatform(5.0f);
+                CreateNormalPlatform(7.0f);
             else
                 CreateNormalPlatform();
             obstacleProtection--;
@@ -101,9 +101,9 @@ public class PlatformGenerator : MonoBehaviour {
 
     void CreateRock()
     {
-        GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(0).gameObject, LastPlatform.transform.position + new Vector3(0.0f, 0.0f, 0.0f), new Quaternion());
-        float rockHeight = newRock.GetComponent<Renderer>().bounds.size.y;
-        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y + rockHeight/2, LastPlatform.transform.position.z); 
+        GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(0).gameObject, LastPlatform.transform.position, new Quaternion());
+        float rockWidth = newRock.GetComponent<Renderer>().bounds.size.x * 0.45f;
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x + rockWidth , LastPlatform.transform.position.y, LastPlatform.transform.position.z); 
         newRock.transform.parent = this.transform;
     }
 
