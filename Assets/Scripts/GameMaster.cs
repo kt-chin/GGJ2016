@@ -4,15 +4,18 @@ using System.Collections;
 public class GameMaster : MonoBehaviour {
 
 	public static GameMaster GM;
-    public string[] spellNames;
-    public int spellNumber = 4;
+    public static string[] spellNames;
+    public static int spellNumber = 4;
 
 	void Start(){
 		if (GM == null) {
 			GM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
 		}
-        spellNames = new string[spellNumber];
-        randomizeSpells();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            spellNames = new string[spellNumber];
+            randomizeSpells();
+        }
     }
     
 	public GameObject playerPrefab;
@@ -31,14 +34,14 @@ public class GameMaster : MonoBehaviour {
 
 
 	public static void KillPlayer(){
-        if (GameObject.FindGameObjectWithTag("Player") == null) return;
+        if (GameObject.FindGameObjectWithTag("Player") == null || GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit == null) return;
         spawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit.transform;
 		Destroy (GameObject.FindGameObjectWithTag("Player").gameObject);
 		GM.StartCoroutine (GM.RespawnPlayer ());
 	}
 
 
-    void randomizeSpells()
+    public static void randomizeSpells()
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
         var newSpells = new System.Collections.Generic.Dictionary<string, System.Action>();
@@ -48,13 +51,14 @@ public class GameMaster : MonoBehaviour {
             string spellName = "";
             do
             {
+                spellName = "";
                 while (spellName.Length < 5)
                 {
                     spellName += charOptions[(int)(Random.value * 4)];
                 }
 
             } while (newSpells.ContainsKey(spellName));
-            spellNames[i] = spellName;
+            GameMaster.spellNames[i] = spellName;
 
             Debug.Log("New Spell Added : " + spellName);
         }
