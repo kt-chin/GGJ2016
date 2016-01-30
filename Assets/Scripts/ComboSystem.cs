@@ -9,7 +9,7 @@ public class ComboSystem : MonoBehaviour {
     private float timeUser = 0;
     public float comboLimit;
     public GameObject cloudPrefab;
-    private string[] spellNames;
+    public string[] spellNames;
 
     // Use this for initialization
     void Start () {
@@ -17,7 +17,7 @@ public class ComboSystem : MonoBehaviour {
 
     }
 
-    int DetectSpellCast()
+    public int DetectSpellCast()
     {
         for(int i = 1; i < key.Length; i ++)
         {
@@ -40,7 +40,7 @@ public class ComboSystem : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (spellNames == null)
+        if (spellNames == null || spellNames.Length == 0)
         {
                 spellNames = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>().spellNames;
                 spells = new System.Collections.Generic.Dictionary<string, System.Action>()
@@ -92,7 +92,7 @@ public class ComboSystem : MonoBehaviour {
         }
 
         // We check if the accumulated string is the same as element combo
-        if (spells.ContainsKey(key))
+        if (spells != null && spells.ContainsKey(key))
         {
             spells[key].Invoke();
             key = "";

@@ -4,7 +4,13 @@ using System.Collections;
 public class SpellHintScript : MonoBehaviour {
 
     public GameObject UP;
+    public GameObject DOWN;
+    public GameObject UP_HINT;
     public GameObject[] full_spell;
+    public GameObject[] Hint_spells;
+
+    string lightningStrike;
+
     
     int x;
     int i;
@@ -13,23 +19,38 @@ public class SpellHintScript : MonoBehaviour {
     int min_x;
     bool is_destroyed = true;
 
+    
+
+
     // Use this for initialization
     void Start () {
 
+        
+
         full_spell = new GameObject[5];
+        Hint_spells = new GameObject[4];
+
         i = 0;
         i_max = 4;
 
-        x = 0;
-        max_x = 8;
-        min_x =0;
+        x = -4;
+        max_x = 4;
+        min_x =-4;
+
+        
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-
         
+
         Create_Spell();
+
+       
+
+      
+
     }
 
 
@@ -42,10 +63,12 @@ public class SpellHintScript : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.RightArrow)) { if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(transform.parent.transform.position.x + x, transform.parent.transform.position.y + 3, 0), Quaternion.Euler(0,0,-90)); increment_position(); }
         for (int u = 0; u < full_spell.Length; u++)
             if (full_spell[u] != null && full_spell[u].transform.parent != this.transform)
-            { full_spell[u].transform.parent = this.transform;
-              //if(GameObject.FindGameObjectWithTag("Player").GetComponent<)
-              }
+            { full_spell[u].transform.parent = this.transform;}
     }
+
+   
+
+    
 
     void increment_position() {
 
