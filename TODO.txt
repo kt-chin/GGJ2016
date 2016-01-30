@@ -1,8 +1,0 @@
-Assets that will be needed : 
-
-- Obstacle for Wind/Earth/Fire/Water
-- Animation for spell Wind/Earth/Fire/Water
-- Animation for obstacle destruction Wind/Earth/Fire/Water
-- UI indication for spell components ? Up/Down/Left/Right
-- Main character model
-

@@ -16,7 +16,7 @@ public class PlatformGenerator : MonoBehaviour {
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
         CreateInitialPlatform();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
             CreatePlatform();
 	}
 
@@ -33,7 +33,10 @@ public class PlatformGenerator : MonoBehaviour {
     {
         if(obstacleProtection > 0)
         {
-            CreateNormalPlatform();
+            if(obstacleProtection == 2)
+                CreateNormalPlatform(5.0f);
+            else
+                CreateNormalPlatform();
             obstacleProtection--;
             return;
         }
@@ -41,19 +44,15 @@ public class PlatformGenerator : MonoBehaviour {
         int myRandomValue = (int)(Random.value * 100);
         if (myRandomValue < rockChance)
         {
-            CreateNormalPlatform(7.0f);
+            CreateNormalPlatform(5.0f);
             CreateRock();
             rockChance = 0;
             obstacleProtection = 2;
         }
-        else if (rockChance == 0)
-        {
-            CreateNormalPlatform(7.0f);
-            incrementChances();
-        }
         else
         {
             CreateNormalPlatform();
+            incrementChances();
         }
     }
 
