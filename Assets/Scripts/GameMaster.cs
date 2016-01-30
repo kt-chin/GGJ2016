@@ -12,7 +12,7 @@ public class GameMaster : MonoBehaviour {
 	}
     
 	public Transform playerPrefab;
-	public Transform spawnPoint;
+	static public Transform spawnPoint;
 	public int spawnDelay = 2;
 	public Transform SpawnParticalPrefab;
 	public Transform enemySpawn;
@@ -20,13 +20,14 @@ public class GameMaster : MonoBehaviour {
 	public IEnumerator RespawnPlayer (){
 		Debug.Log ("SpawnSound");
 		yield return new WaitForSeconds (spawnDelay);
-		Instantiate (playerPrefab, spawnPoint.position, spawnPoint.rotation);
-		GameObject SpawnParticalClone = Instantiate (SpawnParticalPrefab, spawnPoint.position, spawnPoint.rotation) as GameObject;
+		Instantiate (playerPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation);
+		GameObject SpawnParticalClone = Instantiate (SpawnParticalPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation) as GameObject;
 		Destroy (SpawnParticalClone, 3f);
 	}
 
 
 	public static void KillPlayer(PlayerStats player){
+        spawnPoint = player.gameObject.GetComponent<PlayerMovement>().lastPlatformHit.transform;
 		Destroy (player.gameObject);
 		GM.StartCoroutine (GM.RespawnPlayer ());
 	}
