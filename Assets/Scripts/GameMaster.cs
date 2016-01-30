@@ -31,6 +31,7 @@ public class GameMaster : MonoBehaviour {
 
 
 	public static void KillPlayer(){
+        if (GameObject.FindGameObjectWithTag("Player") == null) return;
         spawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit.transform;
 		Destroy (GameObject.FindGameObjectWithTag("Player").gameObject);
 		GM.StartCoroutine (GM.RespawnPlayer ());

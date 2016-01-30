@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
-        if (collider.gameObject.tag == "Ground")
+        if (collider.gameObject.tag == "Ground" || collider.gameObject.tag == "Obstacles")
         {
             grounded = true;
             lastPlatformHit = collider.gameObject;
