@@ -26,6 +26,7 @@ public class PlatformGenerator : MonoBehaviour {
         GameObject newPlatform = (GameObject)Instantiate(platformPrefab, playerPos + new Vector3(0.0f, -2.0f, 0.0f), new Quaternion());
         newPlatform.transform.parent = this.transform;
         newPlatform.tag = "Ground";
+        newPlatform.transform.localScale = new Vector3(2.5f + Random.value * 2.0f - 1.0f, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
         LastPlatform = newPlatform;
     }
 
@@ -80,6 +81,7 @@ public class PlatformGenerator : MonoBehaviour {
             xPos = Random.value * 8 - 2;
         GameObject newPlatform = (GameObject)Instantiate(platformPrefab, LastPlatform.transform.position + new Vector3(7.0f + xPos, -LastPlatform.transform.position.y + yPos, 0.0f), new Quaternion());
         newPlatform.transform.parent = this.transform;
+        newPlatform.transform.localScale = new Vector3(2.5f + Random.value * 2.0f - 1.0f, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
         newPlatform.tag = "Ground";
         LastPlatform = newPlatform;
     }
