@@ -1,52 +1,57 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer))]
 
-public class Tiling : MonoBehaviour {
+public class Tiling : MonoBehaviour
+{
 
-	public int offSetX = 2; // used to counteract errors
+    public int offSetX = 2; // used to counteract errors
 
-	public bool hasARightBuddy = false; //checks for instation
-	public bool hasALeftBuddy = false;
+    public bool hasARightBuddy = false; //checks for instation
+    public bool hasALeftBuddy = false;
     public float edgeVisablePositionRight;
 
     public bool reverseScale = false; // used for none tilable sprites
 
-	private float spriteWidth = 0.0f; // stores sprite width
-	private Camera cam;
-	private Transform myTransform;
+    private float spriteWidth = 0.0f; // stores sprite width
+    private Camera cam;
+    private Transform myTransform;
 
-	void Awake(){
-		cam = Camera.main;
-		myTransform = transform;
+    void Awake()
+    {
+        cam = Camera.main;
+        myTransform = transform;
 
-	}
+    }
 
-	// Use this for initialization
-	void Start () {
-		SpriteRenderer sRenderer = GetComponent<SpriteRenderer>();
-		spriteWidth = sRenderer.sprite.bounds.size.x;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//do we need buddies if not do nothing
-		if (hasALeftBuddy == false || hasARightBuddy == false) {
-			//calculate the cameras extent meaning half the widht of what the camera can see in world coordinates
-			float camHorizantalExtent = cam.orthographicSize * Screen.width/Screen.height;
+    // Use this for initialization
+    void Start()
+    {
+        SpriteRenderer sRenderer = GetComponent<SpriteRenderer>();
+        spriteWidth = sRenderer.sprite.bounds.size.x;
+    }
 
-			// calculate X position where the camara can see the edge of the sprite
-	        edgeVisablePositionRight = (myTransform.position.x + spriteWidth/2) - camHorizantalExtent;
-			float edgeVisablePositionLeft  = (myTransform.position.x - spriteWidth/2) + camHorizantalExtent;
+    // Update is called once per frame
+    void Update()
+    {
+        //do we need buddies if not do nothing
+        if (hasALeftBuddy == false || hasARightBuddy == false)
+        {
+            //calculate the cameras extent meaning half the widht of what the camera can see in world coordinates
+            float camHorizantalExtent = cam.orthographicSize * Screen.width / Screen.height;
 
-			//checking can we see the edge of element then calling make new buddy if we can
-			if(cam.transform.position.x >= edgeVisablePositionRight - offSetX && hasARightBuddy == false)
-			{
-				MakeNewBudy(1);
-				hasARightBuddy = true;
-                
-			}
+            // calculate X position where the camara can see the edge of the sprite
+            edgeVisablePositionRight = (myTransform.position.x + spriteWidth / 2) - camHorizantalExtent;
+            float edgeVisablePositionLeft = (myTransform.position.x - spriteWidth / 2) + camHorizantalExtent;
+
+            //checking can we see the edge of element then calling make new buddy if we can
+            if (cam.transform.position.x >= edgeVisablePositionRight - offSetX && hasARightBuddy == false)
+            {
+                MakeNewBudy(1);
+                hasARightBuddy = true;
+
+            }
             if (cam.transform.position.x >= edgeVisablePositionRight + 50)
             {
                 Debug.Log("Did it delete?");
@@ -54,21 +59,22 @@ public class Tiling : MonoBehaviour {
             }
 
 
-		}
-	
-	}
+        }
+
+    }
     //void OnGUI()
     //{
     //    GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, 100, 100), "Camera Position X: " + cam.transform.position.x);
     //    GUI.Label(new Rect(Screen.width / 2, Screen.height / 2 + 4, 100, 100), "Edge right posX : " + edgeVisablePositionRight);
     //}
-	// a function that creates a budy on the corrosponding side
-	void MakeNewBudy (int rightOrLeft){
-		//calculates new position for new buddy
-		Vector3 newPosition = new Vector3 (myTransform.position.x + spriteWidth * rightOrLeft, myTransform.position.y, myTransform.position.z);
+    // a function that creates a budy on the corrosponding side
+    void MakeNewBudy(int rightOrLeft)
+    {
+        //calculates new position for new buddy
+        Vector3 newPosition = new Vector3(myTransform.position.x + spriteWidth * rightOrLeft, myTransform.position.y, myTransform.position.z);
         //instatiiating our new buddy and storing it in a variable 
         // this.transform.position = new Vector3(myTransform, newPosition, myTransform.rotation) as Transform;
-        Transform newBuddy = Instantiate (myTransform, newPosition, myTransform.rotation)as Transform;
+        Transform newBuddy = Instantiate(myTransform, newPosition, myTransform.rotation) as Transform;
 
         //if not tilable reverse the size x to remove tile seems
         if (reverseScale == true)
