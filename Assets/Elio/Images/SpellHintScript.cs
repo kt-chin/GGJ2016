@@ -20,9 +20,9 @@ public class SpellHintScript : MonoBehaviour {
         i = 0;
         i_max = 4;
 
-        x = -4;
-        max_x = 4;
-        min_x = -4;
+        x = 0;
+        max_x = 8;
+        min_x =0;
     }
 	
 	// Update is called once per frame
@@ -36,13 +36,15 @@ public class SpellHintScript : MonoBehaviour {
     void Create_Spell()
     {
         
-        if      (Input.GetKeyDown(KeyCode.UpArrow)){ if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(x, transform.parent.transform.position.y, 0), Quaternion.identity); increment_position();}
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) { if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(x, transform.parent.transform.position.y, 0), Quaternion.Euler(0,0,180)); increment_position();}
-        else if (Input.GetKeyDown(KeyCode.LeftArrow)) { if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(x, transform.parent.transform.position.y, 0), Quaternion.Euler(0,0,90)); increment_position();}
-        else if (Input.GetKeyDown(KeyCode.RightArrow)) { if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(x, transform.parent.transform.position.y, 0), Quaternion.Euler(0,0,-90)); increment_position(); }
-        for(int u = 0; u < full_spell.Length; u++)
+        if      (Input.GetKeyDown(KeyCode.UpArrow)){ if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(transform.parent.transform.position.x + x, transform.parent.transform.position.y + 3, 0), Quaternion.identity); increment_position();}
+        else if (Input.GetKeyDown(KeyCode.DownArrow)) { if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(transform.parent.transform.position.x + x, transform.parent.transform.position.y + 3 , 0), Quaternion.Euler(0,0,180)); increment_position();}
+        else if (Input.GetKeyDown(KeyCode.LeftArrow)) { if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(transform.parent.transform.position.x + x, transform.parent.transform.position.y + 3, 0), Quaternion.Euler(0,0,90)); increment_position();}
+        else if (Input.GetKeyDown(KeyCode.RightArrow)) { if (is_destroyed == false) { clear_vector(); } full_spell[i] = (GameObject)Instantiate(UP, new Vector3(transform.parent.transform.position.x + x, transform.parent.transform.position.y + 3, 0), Quaternion.Euler(0,0,-90)); increment_position(); }
+        for (int u = 0; u < full_spell.Length; u++)
             if (full_spell[u] != null && full_spell[u].transform.parent != this.transform)
-                full_spell[u].transform.parent = this.transform;
+            { full_spell[u].transform.parent = this.transform;
+              //if(GameObject.FindGameObjectWithTag("Player").GetComponent<)
+              }
     }
 
     void increment_position() {
