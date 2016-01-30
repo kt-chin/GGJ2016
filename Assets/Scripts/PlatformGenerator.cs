@@ -31,7 +31,7 @@ public class PlatformGenerator : MonoBehaviour {
         newPlatform.transform.parent = this.transform;
         newPlatform.tag = "Ground";
         if(chosenPlatform != 1)
-            newPlatform.transform.localScale = new Vector3(2.5f + Random.value * 2.0f - 1.0f, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
+        newPlatform.transform.localScale = new Vector3(2.5f + Random.value * 2.0f - 1.0f, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
         LastPlatform = newPlatform;
     }
 
@@ -40,7 +40,7 @@ public class PlatformGenerator : MonoBehaviour {
         if(obstacleProtection > 0)
         {
             if(obstacleProtection == 2)
-                CreateNormalPlatform(5.0f);
+                CreateNormalPlatform(7.0f);
             else
                 CreateNormalPlatform();
             obstacleProtection--;
@@ -84,7 +84,6 @@ public class PlatformGenerator : MonoBehaviour {
         GameObject platform = platformPrefab.transform.GetChild(chosenPlatform).gameObject;
         if (xPos != -1.0f)
             platform = platformPrefab.transform.GetChild(0).gameObject;
-
         if(yPos == -1.0f)
         yPos = Random.value * 8 - 4 - 1;
         while (yPos - LastPlatform.transform.position.y > 8.0f)
@@ -94,7 +93,7 @@ public class PlatformGenerator : MonoBehaviour {
         GameObject newPlatform = (GameObject)Instantiate(platform, LastPlatform.transform.position + new Vector3(7.0f + xPos, -LastPlatform.transform.position.y + yPos, 0.0f), new Quaternion());
         newPlatform.transform.parent = this.transform;
         if(chosenPlatform != 1)
-            newPlatform.transform.localScale = new Vector3(2.5f + Random.value * 2.0f - 1.0f, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
+        newPlatform.transform.localScale = new Vector3(2.5f + Random.value * 2.0f - 1.0f, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
         newPlatform.tag = "Ground";
         LastPlatform = newPlatform;
     }

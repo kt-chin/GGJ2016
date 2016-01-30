@@ -28,10 +28,11 @@ public class Rock : MonoBehaviour {
 
     IEnumerator MyCoroutine()
     {
-        yield return new WaitForSeconds(0.520f);
+        yield return new WaitForSeconds(0.480f);
         GetComponent<Animator>().enabled = false;
         Destroy(GetComponent<Rigidbody2D>());
         Destroy(GetComponent<CircleCollider2D>());
+        GetComponent<BoxCollider2D>().size = new Vector3 (GetComponent<BoxCollider2D>().size.x * 1.3f, GetComponent<BoxCollider2D>().size.y);
         yield return new WaitForSeconds(8.0f);
         Destroy(gameObject);
     }
