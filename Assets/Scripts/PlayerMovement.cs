@@ -22,17 +22,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            move = !move;
-        }
-        //jumpY -= gravity * Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
-        {
-            rb.velocity = new Vector3(0, jumpY, 0);
-            grounded = false;
-        }
     }
     void Update()
     {
@@ -44,6 +33,20 @@ public class PlayerMovement : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
+
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            move = !move;
+        }
+        //jumpY -= gravity * Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        {
+            rb.velocity = new Vector3(0, jumpY, 0);
+            grounded = false;
+        }
+
         if (move)
         {
             GetComponent<Animator>().SetBool("IsIdle", false);
