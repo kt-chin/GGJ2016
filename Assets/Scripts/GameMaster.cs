@@ -4,15 +4,18 @@ using System.Collections;
 public class GameMaster : MonoBehaviour {
 
 	public static GameMaster GM;
-    public string[] spellNames;
+    public static string[] spellNames;
     public int spellNumber = 4;
 
 	void Start(){
 		if (GM == null) {
 			GM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
 		}
-        spellNames = new string[spellNumber];
-        randomizeSpells();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            spellNames = new string[spellNumber];
+            randomizeSpells();
+        }
     }
     
 	public GameObject playerPrefab;
@@ -54,7 +57,7 @@ public class GameMaster : MonoBehaviour {
                 }
 
             } while (newSpells.ContainsKey(spellName));
-            spellNames[i] = spellName;
+            GameMaster.spellNames[i] = spellName;
 
             Debug.Log("New Spell Added : " + spellName);
         }

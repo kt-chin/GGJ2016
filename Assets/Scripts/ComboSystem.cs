@@ -40,9 +40,9 @@ public class ComboSystem : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (spellNames == null)
+        if (spellNames == null || spellNames.Length == 0 || spellNames[0] == null)
         {
-                spellNames = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>().spellNames;
+                spellNames = GameMaster.spellNames;
                 spells = new System.Collections.Generic.Dictionary<string, System.Action>()
           {
               {spellNames[0], () => fireCombo() },
