@@ -212,16 +212,5 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 
-# Unity stuff
-*.sln
- *.userprefs
- *.csproj
- *.pidb
- *.unityproj
- .DS_Store
- /Library/FailedAssetImports.txt
- /Library/cache/
- /Library/previews/
- /Library/ScriptAssemblies
- /obj
- /Temp
+# Ignore metadata
+Library/metadata/

@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject lastPlatformHit;
     public bool move = false;
     private Animator anim;
-    private bool grounded = true;
+    public bool grounded = true;
     private Rigidbody2D rb;
 
     // Use this for initialization
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             move = !move;
         }
@@ -71,6 +71,13 @@ public class PlayerMovement : MonoBehaviour
         {
             grounded = true;
             lastPlatformHit = collider.gameObject;
+        }
+    }
+    void OnCollisionExit2D(Collision2D collider)
+    {
+        if (collider.gameObject.tag == "Ground")
+        {
+            grounded = false;
         }
     }
 
