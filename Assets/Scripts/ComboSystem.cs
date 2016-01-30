@@ -5,27 +5,29 @@ public class ComboSystem : MonoBehaviour {
 
     // Variables
     public string key = "";
-    public System.Collections.Generic.Dictionary<string, System.Action> spells;
+    public static System.Collections.Generic.Dictionary<string, System.Action> spells;
     private float timeUser = 0;
     public float comboLimit;
-    
+    private string[] spellNames;
 
     // Use this for initialization
     void Start () {
-      spells = new System.Collections.Generic.Dictionary<string, System.Action>()
-      {
-          {"UDLLR", () => fireCombo() },
-          {"RRLUD", () => waterCombo() }
-      };
 
 
-        randomizeSpells();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (spellNames == null)
+        {
+                spellNames = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>().spellNames;
+                spells = new System.Collections.Generic.Dictionary<string, System.Action>()
+          {
+              {spellNames[0], () => fireCombo() },
+              {spellNames[1], () => waterCombo() }
+          };
+        }
         // We check if the time between keys is greater than specific amount
         timeUser += Time.deltaTime;
 
@@ -66,30 +68,6 @@ public class ComboSystem : MonoBehaviour {
         }
     }
 
-    void randomizeSpells()
-    {
-        Random.seed = (int)System.DateTime.Now.Ticks;
-        var newSpells = new System.Collections.Generic.Dictionary<string, System.Action>();
-        string[] charOptions = { "U", "D", "L", "R" };
-        foreach (var kvp in spells)
-        {
-            string spellName = "";
-            do
-            {
-                while (spellName.Length < 5)
-                {
-                    spellName += charOptions[(int)(Random.value * 4)];
-                }
-
-            } while (newSpells.ContainsKey(spellName));
-            newSpells.Add(spellName, kvp.Value);
-
-            Debug.Log("New Spell Added : " + spellName + " -> ");
-            kvp.Value.Invoke();
-        }
-
-        spells = newSpells;
-    }
 
     void waterCombo()
     {
