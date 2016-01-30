@@ -36,6 +36,14 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GetComponent<Animator>().SetTrigger("Die");
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
         if (move)
         {
             GetComponent<Animator>().SetBool("IsIdle", false);
@@ -50,8 +58,6 @@ public class PlayerMovement : MonoBehaviour
             float moveHorizontal = Input.GetAxis("Horizontal");
             if(Mathf.Abs(moveHorizontal) > 0)
                 GetComponent<Animator>().SetBool("IsIdle", false);
-            anim.SetFloat("vSpeed", rb.velocity.y);
-            anim.SetFloat("Speed", rb.velocity.x);
             if (Input.GetAxis("Horizontal") != 0)
                 rb.velocity = new Vector3(moveHorizontal * speed, rb.velocity.y, 0);
 

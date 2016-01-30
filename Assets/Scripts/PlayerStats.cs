@@ -20,7 +20,7 @@ public class PlayerStats : MonoBehaviour {
 	public void TakeDamage (int Damage){
 		playerP.Health -= Damage;
 		if (playerP.Health <= 0) {
-			GameMaster.KillPlayer(this);
+			GameMaster.KillPlayer();
 		}
 	}
 
