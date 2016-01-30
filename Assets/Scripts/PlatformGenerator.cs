@@ -102,8 +102,8 @@ public class PlatformGenerator : MonoBehaviour {
     void CreateRock()
     {
         GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(0).gameObject, LastPlatform.transform.position, new Quaternion());
-        float rockWidth = newRock.GetComponent<Renderer>().bounds.size.x * 0.45f;
-        newRock.transform.position = new Vector3(LastPlatform.transform.position.x + rockWidth , LastPlatform.transform.position.y, LastPlatform.transform.position.z); 
+        float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y, LastPlatform.transform.position.z); 
         newRock.transform.parent = this.transform;
     }
 
