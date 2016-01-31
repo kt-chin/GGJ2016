@@ -89,11 +89,14 @@
     <Compile Include="Assets\SampleAssets\CrossPlatformInput\Scripts\TiltInput.cs" />
     <Compile Include="Assets\SampleAssets\CrossPlatformInput\Scripts\TouchPad.cs" />
     <Compile Include="Assets\SampleAssets\CrossPlatformInput\Scripts\VirtualInput.cs" />
+    <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\Cloud.cs" />
     <Compile Include="Assets\Scripts\ComboSystem.cs" />
+    <Compile Include="Assets\Scripts\DaynNight.cs" />
     <Compile Include="Assets\Scripts\Fading Script.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\Goal.cs" />
+    <Compile Include="Assets\Scripts\HoverButton.cs" />
     <Compile Include="Assets\Scripts\KillPlayer.cs" />
     <Compile Include="Assets\Scripts\MoveTrail.cs" />
     <Compile Include="Assets\Scripts\Parallaxing.cs" />
