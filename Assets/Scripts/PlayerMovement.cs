@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+       
         if (Input.GetKeyDown(KeyCode.K))
         {
             GetComponent<Animator>().SetTrigger("Die");
