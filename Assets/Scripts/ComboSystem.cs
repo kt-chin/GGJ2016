@@ -88,7 +88,7 @@ public class ComboSystem : MonoBehaviour
             timeUser = 0;
         //castingSpell = true;
         // Check for the Key Input pressed, we check the four arrow keys
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[1];
@@ -96,7 +96,7 @@ public class ComboSystem : MonoBehaviour
             audioReference.audioSource.Play();
             spellAnimation.Play("Up");
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.S))
         {
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[2];
@@ -104,7 +104,7 @@ public class ComboSystem : MonoBehaviour
             audioReference.audioSource.Play();
             spellAnimation.Play("Down");
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[3];
@@ -112,7 +112,7 @@ public class ComboSystem : MonoBehaviour
             audioReference.audioSource.Play();
             spellAnimation.Play("Left");
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[4];

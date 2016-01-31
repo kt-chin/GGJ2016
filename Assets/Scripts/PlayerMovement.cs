@@ -14,10 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public GameMaster soundHandler;
 
 
-
     // Use this for initialization
     void Start()
-    {
+    { 
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         soundHandler = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
@@ -27,14 +26,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        
     }
     void Update()
     {
        
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            GetComponent<Animator>().SetTrigger("Die");
-        }
+
         if (Input.GetKeyDown(KeyCode.L))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
@@ -73,12 +70,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveHorizontal = speed;
             if (Mathf.Abs(moveHorizontal) > 0 && GetComponent<Animator>().GetBool("IsIdle"))
                 GetComponent<Animator>().SetBool("IsIdle", false);
-            if (Input.GetAxis("Horizontal") != 0)
-                rb.velocity = new Vector3(moveHorizontal * speed, rb.velocity.y, 0);
-
 
         }
 

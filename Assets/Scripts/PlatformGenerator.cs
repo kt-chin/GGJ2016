@@ -109,7 +109,7 @@ public class PlatformGenerator : MonoBehaviour {
         while (yPos - LastPlatform.transform.position.y > 8.0f)
             yPos = Random.value * 8 - 4 - 1;
         if (xPos == -1.0f)
-            xPos = Random.value * 8 - 2;
+            xPos = Random.value * 8;
 
 
         GameObject newPlatform = (GameObject)Instantiate(platform, LastPlatform.transform.position + new Vector3(7.0f + xPos, -LastPlatform.transform.position.y + yPos, 0.0f), new Quaternion());
