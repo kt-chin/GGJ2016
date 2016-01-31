@@ -21,9 +21,9 @@ public class LightningSpell : MonoBehaviour {
         yield return new WaitForSeconds(1.30f);
         GetComponent<Animator>().enabled = false;
 
-        if(GameObject.FindGameObjectWithTag("Player") != null && this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x < 1.5f)
+        if(GameObject.FindGameObjectWithTag("Player") != null && this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x < 3.0f)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Die");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Electrocution");
         }
 
         foreach(var obj in GameObject.FindGameObjectsWithTag("Obstacles"))

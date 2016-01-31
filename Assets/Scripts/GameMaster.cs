@@ -87,6 +87,7 @@ public class GameMaster : MonoBehaviour
 
     public static void randomizeSpells()
     {
+        GameMaster.spellNames = new string[spellNumber];
         Random.seed = (int)System.DateTime.Now.Ticks;
         var newSpells = new System.Collections.Generic.Dictionary<string, System.Action>();
         string[] charOptions = { "U", "D", "L", "R" };

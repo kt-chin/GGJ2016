@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveHorizontal = speed;
-            if (Mathf.Abs(moveHorizontal) > 0 && GetComponent<Animator>().GetBool("IsIdle")) ;
+            //if (Mathf.Abs(moveHorizontal) > 0 && GetComponent<Animator>().GetBool("IsIdle")) ;
                // GetComponent<Animator>().SetBool("IsIdle", false);
 
         }
