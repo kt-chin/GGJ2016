@@ -11,6 +11,7 @@ public class ComboSystem : MonoBehaviour {
     public GameObject cloudPrefab;
     private string[] spellNames;
     private GameMaster audioReference;
+    public string[] spellNames;
 
     // Use this for initialization
     void Start () {
@@ -18,32 +19,26 @@ public class ComboSystem : MonoBehaviour {
         audioReference = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
     }
 
-    int DetectSpellCast()
+    public int DetectSpellCast(string myKey)
     {
-        for(int i = 1; i < key.Length; i ++)
-        {
-            int matches = 0;
             int lastFound = -1;
             for (int u = 0; u < spellNames.Length; u++)
             {
 
-                if (spellNames[u].IndexOf(key.Substring(0, i)) != -1)
+            if (spellNames[u].Substring(0, myKey.Length) == myKey)
                 {
-                    matches++;
-                    lastFound = u;
+                return u;
                 }
             }
-            if (matches <= 1 && lastFound != -1) return lastFound;
+        return lastFound;
         }
-        return 2;
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (spellNames == null)
+        if (spellNames == null || spellNames.Length == 0 || spellNames[0] == null)
         {
-                spellNames = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>().spellNames;
+                spellNames = GameMaster.spellNames;
                 spells = new System.Collections.Generic.Dictionary<string, System.Action>()
           {
               {spellNames[0], () => fireCombo() },
@@ -55,21 +50,21 @@ public class ComboSystem : MonoBehaviour {
         // We check if the time between keys is greater than specific amount
         timeUser += Time.deltaTime;
 
+        this.key = this.transform.GetChild(0).GetComponent<SpellHintScript>().key;
+
         //CHeck for invalid inputs
         if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5 ) && !spells.ContainsKey(key))
         {
-            spells[spellNames[DetectSpellCast()]].Invoke();
-            key = "";
+            int spellID = DetectSpellCast(key);
+            if (spellID == -1) spellID = 2;
+            spells[spellNames[spellID]].Invoke();
+            this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             timeUser = 0;
             
         }
 
-            // Check if the user has stop input key during a specified time
-            if (timeUser > comboLimit)
-        {
-            key = "";
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
             timeUser = 0;
-        }
 
         // Check for the Key Input pressed, we check the four arrow keys
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -107,17 +102,19 @@ public class ComboSystem : MonoBehaviour {
         }
 
         // We check if the accumulated string is the same as element combo
+        if (spells == null || spells.Count == 0)
+            GameMaster.randomizeSpells();
         if (spells.ContainsKey(key))
         {
             spells[key].Invoke();
-            key = "";
+            this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
         }
 
         if(Input.GetKeyDown(KeyCode.O))
         {
             key = spellNames[2];
             airCombo();
-            key = "";
+            this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
         }
     }
 
@@ -136,7 +133,7 @@ public class ComboSystem : MonoBehaviour {
 
     void airCombo()
     {
-        if (key == spellNames[2])
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
         {
             Debug.Log("Air Spell !");
             GameObject cloud = (GameObject)Instantiate(cloudPrefab, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Rock(Clone)"), new Quaternion());
@@ -145,6 +142,9 @@ public class ComboSystem : MonoBehaviour {
         }
         else
         {
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
+            
             Debug.Log("Failed Air Spell !");
             GameObject cloud = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x , 15.0f, 0.0f), new Quaternion());
             cloud.tag = "Obstacles";

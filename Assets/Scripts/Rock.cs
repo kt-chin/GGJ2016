@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Rock : MonoBehaviour {
 
+    public PhysicsMaterial2D physicsMat;
     public bool isDestroyed = false;
 
 	// Use this for initialization
@@ -29,6 +30,7 @@ public class Rock : MonoBehaviour {
     IEnumerator MyCoroutine()
     {
         yield return new WaitForSeconds(0.750f);
+        GetComponent<BoxCollider2D>().sharedMaterial = physicsMat;
         GetComponent<Animator>().enabled = false;
         Destroy(GetComponent<Rigidbody2D>());
         Destroy(GetComponent<CircleCollider2D>());
