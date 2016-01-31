@@ -61,7 +61,7 @@ public class ComboSystem : MonoBehaviour
         this.key = this.transform.GetChild(0).GetComponent<SpellHintScript>().key;
 
         //CHeck for invalid inputs
-        if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && System.Array.IndexOf<string>(spellNames, key) == -1)
+        if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && System.Array.IndexOf<string>(spellNames, key) == -1 && this.transform.GetChild(0).GetComponent<SpellHintScript>().key != "")
         {
             int spellID = DetectSpellCast(key);
             if (spellID == -1) spellID = lastSpellTried;
@@ -120,7 +120,7 @@ public class ComboSystem : MonoBehaviour
         if (spellNames == null || spellNames.Length == 0)
             GameMaster.randomizeSpells();
         spellNames = GameMaster.spellNames;
-        if (System.Array.IndexOf<string>(spellNames, key) != -1)
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key != "" && System.Array.IndexOf<string>(spellNames, key) != -1)
         {
             InvokeSpell(DetectSpellCast(key));
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
@@ -144,6 +144,7 @@ public class ComboSystem : MonoBehaviour
             case 2: airCombo(); break;
             case 3: earthCombo(); break;
         }
+        this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
     }
 
     void waterCombo()
@@ -206,8 +207,21 @@ public class ComboSystem : MonoBehaviour
 
     void earthCombo()
     {
-        Debug.Log("Earth Spell !");
-        //Todo earth spell effects
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[3])
+        {
+            Debug.Log("Earth Spell !");
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(3).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 0.0f, 0.0f), "Bear Trap(Clone)"), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
+        else
+        {
+
+            Debug.Log("Failed earth Spell !");
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(3).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
     }
 
     Vector3 tryToSnap(Vector3 vec, string target)

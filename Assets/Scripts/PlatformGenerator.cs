@@ -47,7 +47,7 @@ public class PlatformGenerator : MonoBehaviour {
             return;
         }
 
-        int randomElement = Mathf.RoundToInt(Random.value) * currentLevel;
+        int randomElement = Mathf.RoundToInt(Random.value) * (currentLevel-2);
 
         int myRandomValue = (int)(Random.value * 100);
         if (myRandomValue < obstacleChance)
@@ -115,7 +115,7 @@ public class PlatformGenerator : MonoBehaviour {
     {
         GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(0).gameObject, LastPlatform.transform.position, new Quaternion());
         float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
-        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y - sizeY, LastPlatform.transform.position.z);
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y, LastPlatform.transform.position.z);
         newRock.transform.parent = this.transform;
     }
     void CreateVines()

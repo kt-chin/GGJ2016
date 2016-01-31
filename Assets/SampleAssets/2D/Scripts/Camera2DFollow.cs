@@ -49,13 +49,17 @@ namespace UnitySampleAssets._2D
                 lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime*lookAheadReturnSpeed);
             }
 
-            if(earthQuake)
-                lookAheadPos = new Vector3(lookAheadPos.x + Random.value * 2.0f - 1.0f, lookAheadPos.y + Random.value * 2.0f - 1.0f, lookAheadPos.z + Random.value * 2.0f - 1.0f);
 
             Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward*offsetZ;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
 			newPos = new Vector3 (newPos.x, Mathf.Clamp(newPos.y,boundary,Mathf.Infinity), newPos.z);
+
+
+            if (earthQuake)
+            {
+                newPos = new Vector3(newPos.x + Random.value * 4 - 2, newPos.y, newPos.z);
+            }
 
             transform.position = newPos; 
 
