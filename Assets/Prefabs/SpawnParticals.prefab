@@ -25,6 +25,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 408768}
+  - 114: {fileID: 11425800}
   m_Layer: 0
   m_Name: SpawnParticals
   m_TagString: Untagged
@@ -57,6 +58,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 408768}
   m_RootOrder: 0
+--- !u!114 &11425800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455c8c202b898964e8567aaa8a4ef00a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &19849542
 ParticleSystem:
   m_ObjectHideFlags: 1
