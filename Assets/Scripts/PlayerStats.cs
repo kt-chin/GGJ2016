@@ -14,15 +14,10 @@ public class PlayerStats : MonoBehaviour {
 
 	void Update(){
 		if (transform.position.y <= -20) {
-			TakeDamage(999999);
-		}
+            GameMaster.KillPlayer();
+        }
 	}
-	public void TakeDamage (int Damage){
-		playerP.Health -= Damage;
-		if (playerP.Health <= 0) {
-			GameMaster.KillPlayer();
-		}
-	}
+
 
 }
 

@@ -5,11 +5,11 @@ public class ComboSystem : MonoBehaviour {
 
     // Variables
     public string key = "";
-    public static System.Collections.Generic.Dictionary<string, System.Action> spells;
+    public System.Collections.Generic.Dictionary<string, System.Action> spells;
     private float timeUser = 0;
     public float comboLimit;
     public GameObject cloudPrefab;
-    public static string[] spellNames;
+    public string[] spellNames;
     private GameMaster audioReference;
 
     // Use this for initialization
@@ -20,6 +20,7 @@ public class ComboSystem : MonoBehaviour {
 
     public int DetectSpellCast(string myKey)
     {
+        if (spellNames == null || spellNames.Length == 0 || spellNames[0] == null) return -1;
             int lastFound = -1;
             for (int u = 0; u < spellNames.Length; u++)
             {
@@ -68,7 +69,6 @@ public class ComboSystem : MonoBehaviour {
         // Check for the Key Input pressed, we check the four arrow keys
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            key += "U";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[1];
             audioReference.audioSource.volume= 1.0f;
@@ -77,7 +77,6 @@ public class ComboSystem : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            key += "D";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[2];
             audioReference.audioSource.volume = 1.0f;
@@ -85,7 +84,6 @@ public class ComboSystem : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            key += "L";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[3];
             audioReference.audioSource.volume = 1.0f;
@@ -93,7 +91,6 @@ public class ComboSystem : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            key += "R";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[4];
             audioReference.audioSource.volume = 1.0f;
@@ -111,7 +108,7 @@ public class ComboSystem : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.O))
         {
-            key = spellNames[2];
+            this.transform.GetChild(0).GetComponent<SpellHintScript>().key = spellNames[2];
             airCombo();
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
         }
@@ -126,8 +123,24 @@ public class ComboSystem : MonoBehaviour {
 
     void fireCombo()
     {
-        Debug.Log("Fire Spell !");
-        //Todo fire spell effects
+
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
+        {
+            Debug.Log("Fire Spell !");
+            GameObject fb = (GameObject)Instantiate(cloudPrefab, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Vines(Clone)"), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
+        else
+        {
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
+
+            Debug.Log("Failed fire Spell !");
+            GameObject fb = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x, 15.0f, 0.0f), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
     }
 
     void airCombo()

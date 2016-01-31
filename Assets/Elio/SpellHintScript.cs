@@ -83,7 +83,7 @@ public class SpellHintScript : MonoBehaviour {
 
         if (spellID != -1 && key.Length > 0)
         {
-            spellName = ComboSystem.spellNames[spellID];
+            spellName = gameObject.transform.parent.GetComponent<ComboSystem>().spellNames[spellID];
             for (int i = key.Length; i < 5; i++)
             {
                 int keyMatch = 0;
