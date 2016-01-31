@@ -77,6 +77,7 @@ public class ComboSystem : MonoBehaviour {
             key += "U";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[1];
+            audioReference.audioSource.volume= 1.0f;
             audioReference.audioSource.Play();
 
         }
@@ -85,6 +86,7 @@ public class ComboSystem : MonoBehaviour {
             key += "D";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[2];
+            audioReference.audioSource.volume = 1.0f;
             audioReference.audioSource.Play();
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -92,6 +94,7 @@ public class ComboSystem : MonoBehaviour {
             key += "L";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[3];
+            audioReference.audioSource.volume = 1.0f;
             audioReference.audioSource.Play();
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -99,6 +102,7 @@ public class ComboSystem : MonoBehaviour {
             key += "R";
             timeUser = 0;
             audioReference.audioSource.clip = audioReference.playerSound[4];
+            audioReference.audioSource.volume = 1.0f;
             audioReference.audioSource.Play();
         }
 

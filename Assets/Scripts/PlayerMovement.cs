@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector3(0, jumpY, 0);
             soundHandler.audioSource.clip = soundHandler.playerSound[0];
+            soundHandler.audioSource.volume = 0.4f;
             soundHandler.audioSource.Play();
             
             grounded = false;
