@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         soundHandler = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
-
+        //GetComponent<Animator>().SetBool("IsIdle", true);
     }
 
     // Update is called once per frame
@@ -30,8 +30,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-       
 
+        
         if (Input.GetKeyDown(KeyCode.L))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
@@ -71,8 +71,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveHorizontal = speed;
-            if (Mathf.Abs(moveHorizontal) > 0 && GetComponent<Animator>().GetBool("IsIdle"))
-                GetComponent<Animator>().SetBool("IsIdle", false);
+            if (Mathf.Abs(moveHorizontal) > 0 && GetComponent<Animator>().GetBool("IsIdle")) ;
+               // GetComponent<Animator>().SetBool("IsIdle", false);
 
         }
 
