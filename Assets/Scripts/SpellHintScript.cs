@@ -19,14 +19,8 @@ public class SpellHintScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-
-
         full_spell = new GameObject[5];
         Hint_spells = new GameObject[4];
-
-
-
     }
 
     // Update is called once per frame
