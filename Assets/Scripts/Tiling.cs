@@ -52,7 +52,7 @@ public class Tiling : MonoBehaviour
                 hasARightBuddy = true;
 
             }
-            if (cam.transform.position.x >= edgeVisablePositionRight + 50)
+            if (cam.transform.position.x >= edgeVisablePositionRight + 70)
             {
                 Debug.Log("Did it delete?");
                 Destroy(this.gameObject);
