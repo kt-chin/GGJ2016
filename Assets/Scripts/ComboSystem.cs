@@ -54,7 +54,7 @@ public class ComboSystem : MonoBehaviour
         if (spellNames == null || spellNames.Length == 0 || spellNames[0] == null)
         {
                 spellNames = GameMaster.spellNames;
-                spells = new System.Collections.Generic.Dictionary<string, System.Action>()
+            spells = new System.Collections.Generic.Dictionary<string, System.Action>()
           {
               {spellNames[0], () => fireCombo() },
               {spellNames[1], () => waterCombo() },

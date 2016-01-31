@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class GameMaster : MonoBehaviour
     public bool playerDead = false;
     private bool playedDeath = false;
     public static GameObject lastPlatformHit;
-
+    public bool pregame = true;
 
     void Start()
     {
@@ -49,26 +50,36 @@ public class GameMaster : MonoBehaviour
 	}
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player") == null)
+        if (SceneManager.GetActiveScene().name != "Main Menu" || SceneManager.GetActiveScene().name != "LevelSelector")
         {
-            //return;
-            playerDead = true;
-            
+            //Debug.Log("WE ARE IN MAIN MENU OR LEVEL SELECTOR");
+            pregame = false;
         }
-        if (playerDead)
+        if (pregame == true)
         {
-            if (playedDeath == false)
+            if (GameObject.FindGameObjectWithTag("Player") == null)
             {
-                audioSource.clip = playerSound[5];
-                audioSource.volume = 1.0f;
-                audioSource.Play();
-                playedDeath = true;
+                pregame = false;
+                //return;
+                playerDead = true;
             }
-            
-        }
+            if (playerDead)
+            {
+                pregame = true;
+                if (playedDeath == false)
+                {
+                    audioSource.clip = playerSound[5];
+                    audioSource.volume = 1.0f;
+                    audioSource.Play();
+                    playedDeath = true;
+                }
 
-        if (GameObject.FindGameObjectWithTag("Player") == null) return;
-        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+            }
+
+            if (GameObject.FindGameObjectWithTag("Player") == null) return;
+            playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        }
+    
     }
 
 
