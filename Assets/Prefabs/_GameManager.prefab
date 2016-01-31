@@ -1,15 +1,16 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &199156
+--- !u!1 &126074
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 467314}
-  - 114: {fileID: 11441608}
-  - 114: {fileID: 11442658}
+  - 4: {fileID: 443068}
+  - 114: {fileID: 11421490}
+  - 114: {fileID: 11473024}
+  - 82: {fileID: 8208214}
   m_Layer: 0
   m_Name: _GameManager
   m_TagString: GameMaster
@@ -17,24 +18,98 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &467314
+--- !u!4 &443068
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 199156}
+  m_GameObject: {fileID: 126074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11441608
+--- !u!82 &8208214
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126074}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!114 &11421490
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 199156}
+  m_GameObject: {fileID: 126074}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d43cc59aecd567a488607788f5ccf90e, type: 3}
@@ -45,23 +120,31 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   smoothing: 0.5
---- !u!114 &11442658
+--- !u!114 &11473024
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 199156}
+  m_GameObject: {fileID: 126074}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7700cbc2c9e3d844a88b739fe647abf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSound: []
+  playerSound:
+  - {fileID: 8300000, guid: f2cbb228c57ba2a4d9ea21b99e57388b, type: 3}
+  - {fileID: 8300000, guid: 6b9773ec696cfd6478ff4cc0cd16c70a, type: 3}
+  - {fileID: 8300000, guid: fa9ad6f76bc4f244e8ec671f354f5bd4, type: 3}
+  - {fileID: 8300000, guid: cf4285c5f6e444441953bc66081c732f, type: 3}
+  - {fileID: 8300000, guid: 889b956fca3edc74b9d9194cfbbbde1b, type: 3}
+  - {fileID: 8300000, guid: 90e3a06664be60d44bb11448598e3ba9, type: 3}
+  - {fileID: 8300000, guid: 71d2d0517e14c9740bbaa2232efaf0cc, type: 3}
   audioSource: {fileID: 0}
   playerDead: 0
-  playerPrefab: {fileID: 0}
+  pregame: 1
+  playerPrefab: {fileID: 175372, guid: f29392373a5b515489e0a3312f4e5b2c, type: 2}
   spawnDelay: 2
-  SpawnParticalPrefab: {fileID: 0}
+  SpawnParticalPrefab: {fileID: 408768, guid: 4a140b5ed22d1ca44b222ee4928f0cdd, type: 2}
   enemySpawn: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
@@ -72,5 +155,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 199156}
+  m_RootGameObject: {fileID: 126074}
   m_IsPrefabParent: 1

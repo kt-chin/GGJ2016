@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Parallaxing : MonoBehaviour {
 
@@ -19,8 +20,12 @@ public class Parallaxing : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//store the previous frame at the current cams frame positon
-		previousCamPosition = Cam.position;
+        //store the previous frame at the current cams frame positon
+
+        if (SceneManager.GetActiveScene().buildIndex <= 1)
+            return;
+        
+            previousCamPosition = Cam.position;
 
 		ParallaxScales = new float[Backgrounds.Length];
 
@@ -33,8 +38,9 @@ public class Parallaxing : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-		for (int i = 0; i < Backgrounds.Length; i++){
+        if (SceneManager.GetActiveScene().buildIndex <= 1)
+            return;
+        for (int i = 0; i < Backgrounds.Length; i++){
 			// parallax is opposite of camramovement because previous frame multiplied by scale
 			float parallax = (previousCamPosition.x -Cam.position.x) * ParallaxScales[i];
 
