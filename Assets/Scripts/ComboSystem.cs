@@ -123,8 +123,24 @@ public class ComboSystem : MonoBehaviour {
 
     void fireCombo()
     {
-        Debug.Log("Fire Spell !");
-        //Todo fire spell effects
+
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
+        {
+            Debug.Log("Fire Spell !");
+            GameObject fb = (GameObject)Instantiate(cloudPrefab, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Vines(Clone)"), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
+        else
+        {
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
+
+            Debug.Log("Failed fire Spell !");
+            GameObject fb = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x, 15.0f, 0.0f), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
     }
 
     void airCombo()
