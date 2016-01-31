@@ -9,27 +9,28 @@ public class ComboSystem : MonoBehaviour {
     private float timeUser = 0;
     public float comboLimit;
     public GameObject cloudPrefab;
-    public string[] spellNames;
+    public static string[] spellNames;
+    private GameMaster audioReference;
 
     // Use this for initialization
     void Start () {
 
-
+        audioReference = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
     }
 
     public int DetectSpellCast(string myKey)
     {
-        int lastFound = -1;
-        for (int u = 0; u < spellNames.Length; u++)
-        {
+            int lastFound = -1;
+            for (int u = 0; u < spellNames.Length; u++)
+            {
 
             if (spellNames[u].Substring(0, myKey.Length) == myKey)
-            {
+                {
                 return u;
+                }
             }
-        }
         return lastFound;
-    }
+        }
 
     // Update is called once per frame
     void Update()
@@ -58,11 +59,46 @@ public class ComboSystem : MonoBehaviour {
             spells[spellNames[spellID]].Invoke();
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             timeUser = 0;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
             timeUser = 0;
-        
+
+        // Check for the Key Input pressed, we check the four arrow keys
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            key += "U";
+            timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[1];
+            audioReference.audioSource.volume= 1.0f;
+            audioReference.audioSource.Play();
+
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            key += "D";
+            timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[2];
+            audioReference.audioSource.volume = 1.0f;
+            audioReference.audioSource.Play();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            key += "L";
+            timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[3];
+            audioReference.audioSource.volume = 1.0f;
+            audioReference.audioSource.Play();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            key += "R";
+            timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[4];
+            audioReference.audioSource.volume = 1.0f;
+            audioReference.audioSource.Play();
+        }
 
         // We check if the accumulated string is the same as element combo
         if (spells == null || spells.Count == 0)
