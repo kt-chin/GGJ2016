@@ -58,8 +58,6 @@ public class GameMaster : MonoBehaviour {
             }
 
         }
-
-        
     }
 
 
