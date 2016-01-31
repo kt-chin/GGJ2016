@@ -8,7 +8,7 @@ public class PlatformGenerator : MonoBehaviour {
     public GameObject obstaclesPrefab;
     private GameObject LastPlatform;
     private int rockChance = 0;
-    private int iceCubeChance = 0;
+    private int vinesChance = 0;
     private int fieryThingChance = 0;
     private int windyThingChance = 0;
     private int obstacleProtection = -1;
@@ -58,25 +58,25 @@ public class PlatformGenerator : MonoBehaviour {
             rockChance = 0;
             obstacleProtection = 2;
         }
-        else if (currentLevel > 0 && myRandomValue < (rockChance * 1 / currentLevel) + (iceCubeChance * 1 / currentLevel))
+        else if (currentLevel > 0 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel))
         {
             CreateNormalPlatform(5.0f, 4.0f);
-            CreateIceCube();
-            rockChance = 0;
+            CreateVines();
+            vinesChance = 0;
             obstacleProtection = 2;
         }
-        else if (currentLevel > 1 && myRandomValue < (rockChance * 1 / currentLevel) + (iceCubeChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel))
+        else if (currentLevel > 1 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel))
         {
             CreateNormalPlatform(5.0f, 4.0f);
             CreateFieryThing();
-            rockChance = 0;
+            fieryThingChance = 0;
             obstacleProtection = 2;
         }
-        else if (currentLevel > 2 && myRandomValue < (rockChance * 1 / currentLevel) + (iceCubeChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel) + (windyThingChance * 1 / currentLevel))
+        else if (currentLevel > 2 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel) + (windyThingChance * 1 / currentLevel))
         {
             CreateNormalPlatform(5.0f, 4.0f);
             CreateWindyThing();
-            rockChance = 0;
+            windyThingChance = 0;
             obstacleProtection = 2;
         }
         else
@@ -91,7 +91,7 @@ public class PlatformGenerator : MonoBehaviour {
         int currentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
         rockChance += 15 + (int)(rockChance * 0.10f);
         if (currentLevel == 1)
-            iceCubeChance += 15 + (int)(iceCubeChance * 0.10f);
+            vinesChance += 15 + (int)(vinesChance * 0.10f);
         if (currentLevel == 2)
             fieryThingChance += 15 + (int)(fieryThingChance * 0.10f);
         if (currentLevel == 3)
@@ -130,11 +130,11 @@ public class PlatformGenerator : MonoBehaviour {
         newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y - sizeY, LastPlatform.transform.position.z);
         newRock.transform.parent = this.transform;
     }
-    void CreateIceCube()
+    void CreateVines()
     {
         GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(1).gameObject, LastPlatform.transform.position, new Quaternion());
         float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
-        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y - sizeY, LastPlatform.transform.position.z);
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y, LastPlatform.transform.position.z);
         newRock.transform.parent = this.transform;
     }
     void CreateFieryThing()
