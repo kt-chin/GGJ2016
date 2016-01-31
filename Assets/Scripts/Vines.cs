@@ -17,7 +17,7 @@ public class Vines : MonoBehaviour {
 
     }
 
-    public void destroyRock()
+    public void destroyVines()
     {
         if(!isDestroyed)
         {

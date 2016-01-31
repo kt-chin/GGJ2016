@@ -9,7 +9,7 @@ public class BurningTree : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        GetComponent<Animator>().enabled = false;
+        GetComponent<Animator>().enabled = true;
     }
 	
 	// Update is called once per frame
