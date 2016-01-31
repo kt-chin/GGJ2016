@@ -72,11 +72,14 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(moveHorizontal, rb.velocity.y, 0);
             }
         }
-        else
+        else if (!move)       
         {
-            float moveHorizontal = speed;
-            //if (Mathf.Abs(moveHorizontal) > 0 && GetComponent<Animator>().GetBool("IsIdle")) ;
-               // GetComponent<Animator>().SetBool("IsIdle", false);
+            float moveHorizontal = 0;
+            GetComponent<Animator>().SetBool("IsIdle", false);
+            if (moveHorizontal == 0)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            }
 
         }
 
