@@ -11,10 +11,10 @@ public class ComboSystem : MonoBehaviour {
     public GameObject cloudPrefab;
     public string[] spellNames;
     private GameMaster audioReference;
-
+    public Animator spellAnimation;
     // Use this for initialization
     void Start () {
-
+        spellAnimation = GetComponent<Animator>() as Animator;
         audioReference = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
     }
 
@@ -52,7 +52,7 @@ public class ComboSystem : MonoBehaviour {
 
         this.key = this.transform.GetChild(0).GetComponent<SpellHintScript>().key;
 
-        //CHeck for invalid inputs
+        //Check for invalid inputs
         if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5 ) && !spells.ContainsKey(key))
         {
             int spellID = DetectSpellCast(key);
@@ -60,12 +60,18 @@ public class ComboSystem : MonoBehaviour {
             spells[spellNames[spellID]].Invoke();
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             timeUser = 0;
-            
         }
+        else if (timeUser > comboLimit)
+        {
+            timeUser = 0;
+            this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
+            GetComponent<Animator>().SetBool("CastingBool", false);
+        }
+
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
             timeUser = 0;
-
+            GetComponent<Animator>().SetBool("CastingBool", true);
         // Check for the Key Input pressed, we check the four arrow keys
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -73,6 +79,7 @@ public class ComboSystem : MonoBehaviour {
             audioReference.audioSource.clip = audioReference.playerSound[1];
             audioReference.audioSource.volume= 1.0f;
             audioReference.audioSource.Play();
+            spellAnimation.Play("Up");
 
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -81,6 +88,7 @@ public class ComboSystem : MonoBehaviour {
             audioReference.audioSource.clip = audioReference.playerSound[2];
             audioReference.audioSource.volume = 1.0f;
             audioReference.audioSource.Play();
+            spellAnimation.Play("Down");
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -88,6 +96,7 @@ public class ComboSystem : MonoBehaviour {
             audioReference.audioSource.clip = audioReference.playerSound[3];
             audioReference.audioSource.volume = 1.0f;
             audioReference.audioSource.Play();
+            spellAnimation.Play("Left");
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -95,7 +104,9 @@ public class ComboSystem : MonoBehaviour {
             audioReference.audioSource.clip = audioReference.playerSound[4];
             audioReference.audioSource.volume = 1.0f;
             audioReference.audioSource.Play();
+            spellAnimation.Play("Right");
         }
+
 
         // We check if the accumulated string is the same as element combo
         if (spells == null || spells.Count == 0)
