@@ -18,13 +18,14 @@ public class LightningSpell : MonoBehaviour {
 
     IEnumerator MyCloudCoroutine()
     {
+        if (GameObject.FindGameObjectWithTag("Player") != null && this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x < 3.0f)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().Play("Electrocution");
+            //GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Electrocution");
+        }
+
         yield return new WaitForSeconds(1.30f);
         GetComponent<Animator>().enabled = false;
-
-        if(GameObject.FindGameObjectWithTag("Player") != null && this.transform.position.x - GameObject.FindGameObjectWithTag("Player").transform.position.x < 3.0f)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Electrocution");
-        }
 
         foreach(var obj in GameObject.FindGameObjectsWithTag("Obstacles"))
         {
