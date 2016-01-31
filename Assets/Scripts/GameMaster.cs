@@ -100,7 +100,7 @@ public class GameMaster : MonoBehaviour
     {
         GameMaster.spellNames = new string[spellNumber];
         Random.seed = (int)System.DateTime.Now.Ticks;
-        var newSpells = new System.Collections.Generic.Dictionary<string, System.Action>();
+        var newSpells = new string[spellNumber];
         string[] charOptions = { "U", "D", "L", "R" };
         for (int i = 0; i < spellNumber; i++)
         {
@@ -113,7 +113,7 @@ public class GameMaster : MonoBehaviour
                     spellName += charOptions[(int)(Random.value * 4)];
                 }
 
-            } while (newSpells.ContainsKey(spellName));
+            } while (System.Array.IndexOf<string>(newSpells, spellName) != -1);
             GameMaster.spellNames[i] = spellName;
 
             Debug.Log("New Spell Added : " + spellName);

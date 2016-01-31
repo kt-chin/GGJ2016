@@ -17,7 +17,7 @@ public class BurningTree : MonoBehaviour {
 
     }
 
-    public void destroyRock()
+    public void destroyBurningTree()
     {
         if(!isDestroyed)
         {

@@ -6,7 +6,6 @@ public class ComboSystem : MonoBehaviour
 
     // Variables
     public string key = "";
-    public System.Collections.Generic.Dictionary<string, System.Action> spells;
     private float timeUser = 0;
     public float comboLimit;
     public GameObject spellsPrefab;
@@ -54,13 +53,6 @@ public class ComboSystem : MonoBehaviour
         if (spellNames == null || spellNames.Length == 0 || spellNames[0] == null)
         {
                 spellNames = GameMaster.spellNames;
-            spells = new System.Collections.Generic.Dictionary<string, System.Action>()
-          {
-              {spellNames[0], () => fireCombo() },
-              {spellNames[1], () => waterCombo() },
-              {spellNames[2], () => airCombo() },
-              {spellNames[3], () => earthCombo() }
-          };
         }
 
         // We check if the time between keys is greater than specific amount
@@ -69,11 +61,11 @@ public class ComboSystem : MonoBehaviour
         this.key = this.transform.GetChild(0).GetComponent<SpellHintScript>().key;
 
         //CHeck for invalid inputs
-        if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && !spells.ContainsKey(key))
+        if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && System.Array.IndexOf<string>(spellNames, key) == -1)
         {
             int spellID = DetectSpellCast(key);
             if (spellID == -1) spellID = lastSpellTried;
-            spells[spellNames[spellID]].Invoke();
+            InvokeSpell(spellID);
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             timeUser = 0;
             castingSpell = false;
@@ -125,11 +117,12 @@ public class ComboSystem : MonoBehaviour
 
 
         // We check if the accumulated string is the same as element combo
-        if (spells == null || spells.Count == 0)
+        if (spellNames == null || spellNames.Length == 0)
             GameMaster.randomizeSpells();
-        if (spells.ContainsKey(key))
+        spellNames = GameMaster.spellNames;
+        if (System.Array.IndexOf<string>(spellNames, key) != -1)
         {
-            spells[key].Invoke();
+            InvokeSpell(DetectSpellCast(key));
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             castingSpell = false;
         }
@@ -142,11 +135,34 @@ public class ComboSystem : MonoBehaviour
         }
     }
 
+    void InvokeSpell(int index)
+    {
+        switch(index)
+        {
+            case 0: fireCombo(); break;
+            case 1: waterCombo(); break;
+            case 2: airCombo(); break;
+            case 3: earthCombo(); break;
+        }
+    }
 
     void waterCombo()
     {
-        Debug.Log("Water Spell !");
-        //Todo Water spell effects
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[1])
+        {
+            Debug.Log("Water Spell !");
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(1).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 0.0f, 0.0f), "BurningTree(Clone)"), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
+        else
+        {
+
+            Debug.Log("Failed Water Spell !");
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(1).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
     }
 
     void fireCombo()
@@ -155,7 +171,7 @@ public class ComboSystem : MonoBehaviour
         if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[0])
         {
         Debug.Log("Fire Spell !");
-            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(1).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 0.0f, 0.0f), "Vines(Clone)"), new Quaternion());
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 0.0f, 0.0f), "Vines(Clone)"), new Quaternion());
             fb.tag = "Obstacles";
             fb.GetComponent<Animator>().enabled = false;
         }
@@ -163,7 +179,7 @@ public class ComboSystem : MonoBehaviour
         {
 
             Debug.Log("Failed fire Spell !");
-            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(1).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
             fb.tag = "Obstacles";
             fb.GetComponent<Animator>().enabled = false;
         }
@@ -174,7 +190,7 @@ public class ComboSystem : MonoBehaviour
         if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
         {
             Debug.Log("Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 5.0f, 0.0f), "Rock(Clone)"), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(2).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 5.0f, 0.0f), "Rock(Clone)"), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
@@ -182,7 +198,7 @@ public class ComboSystem : MonoBehaviour
         {
             
             Debug.Log("Failed Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(2).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
