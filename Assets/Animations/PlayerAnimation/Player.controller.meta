@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/PlayerAnimation/Player.controller.meta
 guid: ec9c6ca5a253a3a48ac72a7d61c3a0da
+=======
+guid: d90fce0f35ad2ad469303d0a16330e3b
+>>>>>>> origin/master:Assets/Animations/PlayerAnimation/Player.controller.meta
 timeCreated: 1454121372
 licenseType: Free
 NativeFormatImporter:

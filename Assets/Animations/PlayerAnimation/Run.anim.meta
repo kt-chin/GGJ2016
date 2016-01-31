@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/PlayerAnimation/Run.anim.meta
 guid: 3c4d09a76a20ffa41b9320a3ac69648f
+=======
+guid: 5ac9bc3973bf45946954d2582fe43b79
+>>>>>>> origin/master:Assets/Animations/PlayerAnimation/Run.anim.meta
 timeCreated: 1454121293
 licenseType: Free
 NativeFormatImporter:

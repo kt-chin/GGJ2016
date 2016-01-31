@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/PlayerAnimation/walk4.controller.meta
 guid: 1bd54e6bc3ad75549b6ff54d84857b2f
+=======
+guid: 2f6e2ab13a3efee4eae287118fb980f2
+>>>>>>> origin/master:Assets/Animations/PlayerAnimation/walk4.controller.meta
 timeCreated: 1454162507
 licenseType: Free
 NativeFormatImporter:

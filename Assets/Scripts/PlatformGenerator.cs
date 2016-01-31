@@ -8,7 +8,9 @@ public class PlatformGenerator : MonoBehaviour {
     public GameObject obstaclesPrefab;
     private GameObject LastPlatform;
     private int rockChance = 0;
-    private int iceCubeChance = 0;
+    private int vinesChance = 0;
+    private int fieryThingChance = 0;
+    private int bearTrapChance = 0;
     private int obstacleProtection = -1;
 
 
@@ -37,7 +39,8 @@ public class PlatformGenerator : MonoBehaviour {
 
     void CreatePlatform()
     {
-        if(obstacleProtection > 0)
+        int currentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+        if (obstacleProtection > 0)
         {
             if(obstacleProtection == 2)
                 CreateNormalPlatform(7.0f);
@@ -50,14 +53,31 @@ public class PlatformGenerator : MonoBehaviour {
         int myRandomValue = (int)(Random.value * 100);
         if (myRandomValue < rockChance)
         {
-            CreateNormalPlatform(5.0f);
+            CreateNormalPlatform(5.0f, 4.0f);
             CreateRock();
             rockChance = 0;
             obstacleProtection = 2;
         }
-        else if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex >= 1 && myRandomValue < iceCubeChance)
+        else if (currentLevel > 0 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel))
         {
-
+            CreateNormalPlatform(5.0f, 4.0f);
+            CreateVines();
+            vinesChance = 0;
+            obstacleProtection = 2;
+        }
+        else if (currentLevel > 1 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel))
+        {
+            CreateNormalPlatform(5.0f, 4.0f);
+            CreateFieryThing();
+            fieryThingChance = 0;
+            obstacleProtection = 2;
+        }
+        else if (currentLevel > 2 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel) + (bearTrapChance * 1 / currentLevel))
+        {
+            CreateNormalPlatform(5.0f, 4.0f);
+            CreateBearTrap();
+            bearTrapChance = 0;
+            obstacleProtection = 2;
         }
         else
         {
@@ -68,33 +88,37 @@ public class PlatformGenerator : MonoBehaviour {
 
     void incrementChances()
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            rockChance += 15 + (int)(rockChance * 0.10f);
-        }
-        else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            rockChance += 15 + (int)(rockChance * 0.10f);
-        }
+        int currentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+        rockChance += 15 + (int)(rockChance * 0.10f);
+        if (currentLevel == 1)
+            vinesChance += 15 + (int)(vinesChance * 0.10f);
+        if (currentLevel == 2)
+            fieryThingChance += 15 + (int)(fieryThingChance * 0.10f);
+        if (currentLevel == 3)
+            bearTrapChance += 15 + (int)(bearTrapChance * 0.10f);
     }
 
-    void CreateNormalPlatform(float xPos = -1.0f, float yPos = -1.0f)
+    void CreateNormalPlatform(float xPos = -1.0f, float xLength = -1.0f)
     {
         int chosenPlatform = (int)(Random.value * platformPrefab.transform.childCount);
         GameObject platform = platformPrefab.transform.GetChild(chosenPlatform).gameObject;
         if (xPos != -1.0f)
             platform = platformPrefab.transform.GetChild(0).gameObject;
-
-        if(yPos == -1.0f)
-        yPos = Random.value * 8 - 4 - 1;
+        
+        float yPos = Random.value * 8 - 4 - 1;
         while (yPos - LastPlatform.transform.position.y > 8.0f)
             yPos = Random.value * 8 - 4 - 1;
         if (xPos == -1.0f)
             xPos = Random.value * 8 - 2;
+
+
         GameObject newPlatform = (GameObject)Instantiate(platform, LastPlatform.transform.position + new Vector3(7.0f + xPos, -LastPlatform.transform.position.y + yPos, 0.0f), new Quaternion());
         newPlatform.transform.parent = this.transform;
-        if(chosenPlatform != 1)
+        if(xLength != -1)
+            newPlatform.transform.localScale = new Vector3(xLength, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
+        else if(chosenPlatform != 1)
             newPlatform.transform.localScale = new Vector3(2.5f + Random.value * 2.0f - 1.0f, newPlatform.transform.localScale.y, newPlatform.transform.localScale.z);
+
         newPlatform.tag = "Ground";
         LastPlatform = newPlatform;
     }
@@ -103,7 +127,28 @@ public class PlatformGenerator : MonoBehaviour {
     {
         GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(0).gameObject, LastPlatform.transform.position, new Quaternion());
         float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
-        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y, LastPlatform.transform.position.z); 
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y - sizeY, LastPlatform.transform.position.z);
+        newRock.transform.parent = this.transform;
+    }
+    void CreateVines()
+    {
+        GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(1).gameObject, LastPlatform.transform.position, new Quaternion());
+        float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y, LastPlatform.transform.position.z);
+        newRock.transform.parent = this.transform;
+    }
+    void CreateFieryThing()
+    {
+        GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(2).gameObject, LastPlatform.transform.position, new Quaternion());
+        float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y + sizeY, LastPlatform.transform.position.z);
+        newRock.transform.parent = this.transform;
+    }
+    void CreateBearTrap()
+    {
+        GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(3).gameObject, LastPlatform.transform.position, new Quaternion());
+        float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y + 15, LastPlatform.transform.position.z);
         newRock.transform.parent = this.transform;
     }
 

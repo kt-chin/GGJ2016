@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/PlayerAnimation/walk21.png.meta
 guid: cf5ef77793a95c04c8144d4b3ca6d19b
+=======
+guid: 22d9052117bf7ef46865dcf2256c39c8
+>>>>>>> origin/master:Assets/Animations/PlayerAnimation/walk21.png.meta
 timeCreated: 1454162475
 licenseType: Free
 TextureImporter:

@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         soundHandler = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
         waitingToDie = false;
-
+        
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-
+       
         if (Input.GetKeyDown(KeyCode.K))
         {
             GetComponent<Animator>().SetTrigger("Die");
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             soundHandler.audioSource.clip = soundHandler.playerSound[0];
             soundHandler.audioSource.volume = 0.4f;
             soundHandler.audioSource.Play();
-
+            
             grounded = false;
         }
 

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/PlayerAnimation/walk2.controller.meta
 guid: 4561f9098bfbe204cb32057c0eaef774
+=======
+guid: 5a1fc267ca998f24baf9fc24802e8add
+>>>>>>> origin/master:Assets/Animations/PlayerAnimation/walk2.controller.meta
 timeCreated: 1454162187
 licenseType: Free
 NativeFormatImporter:

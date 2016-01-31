@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/PlayerAnimation/walk10.png.meta
 guid: 4c687fd10237eb144827246d4fa3fcd6
+=======
+guid: 5abe2f380a738d74fae6e4a32e9bafe0
+>>>>>>> origin/master:Assets/Animations/PlayerAnimation/walk10.png.meta
 timeCreated: 1454162475
 licenseType: Free
 TextureImporter:

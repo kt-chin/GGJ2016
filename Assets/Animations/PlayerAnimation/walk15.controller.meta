@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/PlayerAnimation/walk15.controller.meta
 guid: ef2bf3bba4033594aa5ad5f5cc8800ba
+=======
+guid: 448b33854ee396e429b017f7d7b2c0f0
+>>>>>>> origin/master:Assets/Animations/PlayerAnimation/walk15.controller.meta
 timeCreated: 1454162516
 licenseType: Free
 NativeFormatImporter:
