@@ -36,9 +36,11 @@ public class ComboSystem : MonoBehaviour
 
             if (spellNames[u].Substring(0, myKey.Length) == myKey)
                 {
+                lastSpellTried = u;
                 return u;
                 }
             }
+        if (lastFound != -1) lastSpellTried = lastFound;
         return lastFound;
         }
 
@@ -70,7 +72,7 @@ public class ComboSystem : MonoBehaviour
         if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && !spells.ContainsKey(key))
         {
             int spellID = DetectSpellCast(key);
-            if (spellID == -1) spellID = 2;
+            if (spellID == -1) spellID = lastSpellTried;
             spells[spellNames[spellID]].Invoke();
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             timeUser = 0;
@@ -172,7 +174,7 @@ public class ComboSystem : MonoBehaviour
         if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
         {
             Debug.Log("Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Rock(Clone)"), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 5.0f, 0.0f), "Rock(Clone)"), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
@@ -180,7 +182,7 @@ public class ComboSystem : MonoBehaviour
         {
             
             Debug.Log("Failed Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x, 15.0f, 0.0f), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
