@@ -16,8 +16,9 @@ namespace UnitySampleAssets._2D
         private Vector3 lastTargetPosition;
         private Vector3 currentVelocity;
         private Vector3 lookAheadPos;
+        public bool earthQuake = false;
 
-		private float nextTimeToSearch = 0;
+        private float nextTimeToSearch = 0;
         // Use this for initialization
         private void Start()
         {
@@ -47,6 +48,9 @@ namespace UnitySampleAssets._2D
             {
                 lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime*lookAheadReturnSpeed);
             }
+
+            if(earthQuake)
+                lookAheadPos = new Vector3(lookAheadPos.x + Random.value * 2.0f - 1.0f, lookAheadPos.y + Random.value * 2.0f - 1.0f, lookAheadPos.z + Random.value * 2.0f - 1.0f);
 
             Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward*offsetZ;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
