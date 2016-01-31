@@ -1,47 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameMaster : MonoBehaviour {
+public class GameMaster : MonoBehaviour
+{
 
-	public static GameMaster GM;
-    public string[] spellNames;
-    public int spellNumber = 4;
+    public static GameMaster GM;
+    public static string[] spellNames;
+    public static int spellNumber = 4;
     public AudioClip[] playerSound;
     public AudioSource audioSource;
     public bool playerDead = false;
     private bool playedDeath = false;
 
-    void Start(){
-		if (GM == null) {
-			GM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
-		}
-        spellNames = new string[spellNumber];
-        audioSource = GetComponent<AudioSource>();
-        randomizeSpells();
+
+    void Start()
+    {
+        if (GM == null)
+        {
+            GM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
+        }
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            spellNames = new string[spellNumber];
+            audioSource = GetComponent<AudioSource>();
+            randomizeSpells();
+        }
     }
-    
-	public GameObject playerPrefab;
-	static public Transform spawnPoint;
-	public int spawnDelay = 2;
-	public Transform SpawnParticalPrefab;
-	public Transform enemySpawn;
-	public IEnumerator RespawnPlayer (){
-		Debug.Log ("SpawnSound");
-		yield return new WaitForSeconds (spawnDelay);
-		Instantiate (playerPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation);
-		GameObject SpawnParticalClone = Instantiate (SpawnParticalPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation) as GameObject;
-		Destroy (SpawnParticalClone, 3f);
+
+    public GameObject playerPrefab;
+    static public Transform spawnPoint;
+    public int spawnDelay = 2;
+    public Transform SpawnParticalPrefab;
+    public Transform enemySpawn;
+    public IEnumerator RespawnPlayer()
+    {
+        Debug.Log("SpawnSound");
+        yield return new WaitForSeconds(spawnDelay);
+        Instantiate(playerPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation);
+        GameObject SpawnParticalClone = Instantiate(SpawnParticalPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation) as GameObject;
+        Destroy(SpawnParticalClone, 3f);
         playerDead = false;
         playedDeath = false;
-       
-	}
+
+    }
     void Update()
     {
         if (GameObject.FindGameObjectWithTag("Player") == null)
         {
             //return;
             playerDead = true;
-            
+
         }
         if (playerDead)
         {
@@ -52,24 +60,22 @@ public class GameMaster : MonoBehaviour {
                 audioSource.Play();
                 playedDeath = true;
             }
-            
-        }
 
-        
+        }
     }
 
 
-	public static void KillPlayer(){
-        if (GameObject.FindGameObjectWithTag("Player") == null) return;
-        
+    public static void KillPlayer()
+    {
+        if (GameObject.FindGameObjectWithTag("Player") == null || GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit == null) return;
         spawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit.transform;
-		Destroy (GameObject.FindGameObjectWithTag("Player").gameObject);
-        
-		GM.StartCoroutine (GM.RespawnPlayer ());
-	}
+        Destroy(GameObject.FindGameObjectWithTag("Player").gameObject);
+
+        GM.StartCoroutine(GM.RespawnPlayer());
+    }
 
 
-    void randomizeSpells()
+    public static void randomizeSpells()
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
         var newSpells = new System.Collections.Generic.Dictionary<string, System.Action>();
@@ -79,13 +85,14 @@ public class GameMaster : MonoBehaviour {
             string spellName = "";
             do
             {
+                spellName = "";
                 while (spellName.Length < 5)
                 {
                     spellName += charOptions[(int)(Random.value * 4)];
                 }
 
             } while (newSpells.ContainsKey(spellName));
-            spellNames[i] = spellName;
+            GameMaster.spellNames[i] = spellName;
 
             Debug.Log("New Spell Added : " + spellName);
         }

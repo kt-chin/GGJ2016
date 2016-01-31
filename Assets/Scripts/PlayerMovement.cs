@@ -13,12 +13,16 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     public GameMaster soundHandler;
 
+    public bool waitingToDie;
+
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         soundHandler = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
+        waitingToDie = false;
+
     }
 
     // Update is called once per frame
@@ -27,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-       
+
         if (Input.GetKeyDown(KeyCode.K))
         {
             GetComponent<Animator>().SetTrigger("Die");
@@ -35,6 +39,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
         }
 
 
@@ -50,10 +58,15 @@ public class PlayerMovement : MonoBehaviour
             soundHandler.audioSource.clip = soundHandler.playerSound[0];
             soundHandler.audioSource.volume = 0.4f;
             soundHandler.audioSource.Play();
-            
+
             grounded = false;
         }
 
+        if (waitingToDie)
+        {
+            rb.velocity = new Vector3(0, 0, 0);
+            return;
+        }
         if (move)
         {
             GetComponent<Animator>().SetBool("IsIdle", false);
@@ -66,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveHorizontal = Input.GetAxis("Horizontal");
-            if(Mathf.Abs(moveHorizontal) > 0)
+            if (Mathf.Abs(moveHorizontal) > 0)
                 GetComponent<Animator>().SetBool("IsIdle", false);
             if (Input.GetAxis("Horizontal") != 0)
                 rb.velocity = new Vector3(moveHorizontal * speed, rb.velocity.y, 0);
