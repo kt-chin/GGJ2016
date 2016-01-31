@@ -9,9 +9,8 @@ public class ComboSystem : MonoBehaviour {
     private float timeUser = 0;
     public float comboLimit;
     public GameObject cloudPrefab;
-    private string[] spellNames;
+    public static string[] spellNames;
     private GameMaster audioReference;
-    public string[] spellNames;
 
     // Use this for initialization
     void Start () {

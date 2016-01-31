@@ -4,14 +4,13 @@ using System.Collections;
 public class GameMaster : MonoBehaviour {
 
 	public static GameMaster GM;
-    public string[] spellNames;
-    public int spellNumber = 4;
+    public static string[] spellNames;
+    public static int spellNumber = 4;
     public AudioClip[] playerSound;
     public AudioSource audioSource;
     public bool playerDead = false;
     private bool playedDeath = false;
-    public static string[] spellNames;
-    public static int spellNumber = 4;
+
 
 	void Start(){
 		if (GM == null) {
