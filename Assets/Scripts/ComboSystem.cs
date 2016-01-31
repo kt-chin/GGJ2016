@@ -9,7 +9,7 @@ public class ComboSystem : MonoBehaviour {
     private float timeUser = 0;
     public float comboLimit;
     public GameObject cloudPrefab;
-    private string[] spellNames;
+    public string[] spellNames;
 
     // Use this for initialization
     void Start () {
@@ -17,16 +17,16 @@ public class ComboSystem : MonoBehaviour {
 
     }
 
-    int DetectSpellCast()
+    public int DetectSpellCast()
     {
-        for(int i = 1; i < key.Length; i ++)
+        int lastFound = -1;
+        for (int i = 1; i < key.Length; i ++)
         {
             int matches = 0;
-            int lastFound = -1;
             for (int u = 0; u < spellNames.Length; u++)
             {
 
-                if (spellNames[u].IndexOf(key.Substring(0, i)) != -1)
+                if (spellNames[u].Substring(0, i) == key.Substring(0, i))
                 {
                     matches++;
                     lastFound = u;
@@ -34,7 +34,7 @@ public class ComboSystem : MonoBehaviour {
             }
             if (matches <= 1 && lastFound != -1) return lastFound;
         }
-        return 2;
+        return lastFound;
     }
 
     // Update is called once per frame
@@ -57,7 +57,9 @@ public class ComboSystem : MonoBehaviour {
         //CHeck for invalid inputs
         if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5 ) && !spells.ContainsKey(key))
         {
-            spells[spellNames[DetectSpellCast()]].Invoke();
+            int spellID = DetectSpellCast();
+            if (spellID == -1) spellID = 2;
+            spells[spellNames[spellID]].Invoke();
             key = "";
             timeUser = 0;
         }
