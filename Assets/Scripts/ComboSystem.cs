@@ -206,8 +206,21 @@ public class ComboSystem : MonoBehaviour
 
     void earthCombo()
     {
-        Debug.Log("Earth Spell !");
-        //Todo earth spell effects
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[3])
+        {
+            Debug.Log("Earth Spell !");
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(3).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 0.0f, 0.0f), "Bear Trap(Clone)"), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
+        else
+        {
+
+            Debug.Log("Failed earth Spell !");
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(3).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
+            fb.tag = "Obstacles";
+            fb.GetComponent<Animator>().enabled = false;
+        }
     }
 
     Vector3 tryToSnap(Vector3 vec, string target)
