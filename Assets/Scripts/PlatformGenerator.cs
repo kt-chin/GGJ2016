@@ -7,10 +7,7 @@ public class PlatformGenerator : MonoBehaviour {
     public GameObject platformPrefab;
     public GameObject obstaclesPrefab;
     private GameObject LastPlatform;
-    private int rockChance = 0;
-    private int vinesChance = 0;
-    private int fieryThingChance = 0;
-    private int bearTrapChance = 0;
+    private int obstacleChance = 0;
     private int obstacleProtection = -1;
 
 
@@ -50,33 +47,29 @@ public class PlatformGenerator : MonoBehaviour {
             return;
         }
 
+        int randomElement = Mathf.RoundToInt(Random.value) * currentLevel;
+
         int myRandomValue = (int)(Random.value * 100);
-        if (myRandomValue < rockChance)
+        if (myRandomValue < obstacleChance)
         {
             CreateNormalPlatform(5.0f, 4.0f);
-            CreateRock();
-            rockChance = 0;
-            obstacleProtection = 2;
-        }
-        else if (currentLevel > 0 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel))
-        {
-            CreateNormalPlatform(5.0f, 4.0f);
-            CreateVines();
-            vinesChance = 0;
-            obstacleProtection = 2;
-        }
-        else if (currentLevel > 1 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel))
-        {
-            CreateNormalPlatform(5.0f, 4.0f);
-            CreateFieryThing();
-            fieryThingChance = 0;
-            obstacleProtection = 2;
-        }
-        else if (currentLevel > 2 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel) + (bearTrapChance * 1 / currentLevel))
-        {
-            CreateNormalPlatform(5.0f, 4.0f);
-            CreateBearTrap();
-            bearTrapChance = 0;
+            if (randomElement == 0)
+            {
+                CreateRock();
+            }
+            else if (randomElement == 1)
+            {
+                CreateVines();
+            }
+            else if (randomElement == 2)
+            {
+                CreateFieryThing();
+            }
+            else if (randomElement == 3)
+            {
+                CreateBearTrap();
+            }
+            obstacleChance = 0;
             obstacleProtection = 2;
         }
         else
@@ -89,13 +82,8 @@ public class PlatformGenerator : MonoBehaviour {
     void incrementChances()
     {
         int currentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-        rockChance += 15 + (int)(rockChance * 0.10f);
-        if (currentLevel == 1)
-            vinesChance += 15 + (int)(vinesChance * 0.10f);
-        if (currentLevel == 2)
-            fieryThingChance += 15 + (int)(fieryThingChance * 0.10f);
-        if (currentLevel == 3)
-            bearTrapChance += 15 + (int)(bearTrapChance * 0.10f);
+        obstacleChance += 15 + (int)(obstacleChance * 0.10f);
+        
     }
 
     void CreateNormalPlatform(float xPos = -1.0f, float xLength = -1.0f)

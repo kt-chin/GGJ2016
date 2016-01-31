@@ -86,8 +86,11 @@ public class PlayerMovement : MonoBehaviour
         if (collider.gameObject.tag == "Ground" || collider.gameObject.tag == "Obstacles")
         {
             grounded = true;
-            lastPlatformHit = collider.gameObject;
-            GameMaster.lastPlatformHit = collider.gameObject;
+            if (collider.gameObject.tag != "Obstacles")
+            {
+                lastPlatformHit = collider.gameObject;
+                GameMaster.lastPlatformHit = collider.gameObject;
+            }
         }
     }
     void OnCollisionExit2D(Collision2D collider)

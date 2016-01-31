@@ -39,5 +39,22 @@ public class BearTrap : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.name == "Player" || collider.name == "Player(Clone)")
+        {
+            GetComponent<Animator>().enabled = true;
+            StartCoroutine(MyKillPlayerCoRoutine());
 
+        }
+    }
+
+    IEnumerator MyKillPlayerCoRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameMaster.KillPlayer();
+        GetComponent<Animator>().enabled = false;
+        yield return new WaitForSeconds(1.5f);
+        Destroy(this.gameObject);
+    }
 }

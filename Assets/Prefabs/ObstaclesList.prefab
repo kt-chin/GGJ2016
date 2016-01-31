@@ -70,6 +70,7 @@ GameObject:
   - 50: {fileID: 5085376}
   - 61: {fileID: 6173384}
   - 114: {fileID: 11442696}
+  - 61: {fileID: 6116868}
   m_Layer: 0
   m_Name: BearTrap
   m_TagString: Obstacles
@@ -271,6 +272,20 @@ BoxCollider2D:
   m_Offset: {x: -0.2, y: 2.27}
   serializedVersion: 2
   m_Size: {x: 2.7001758, y: 1.2164859}
+--- !u!61 &6116868
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172896}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.083684534, y: 0.08292908}
+  serializedVersion: 2
+  m_Size: {x: 4.082303, y: 0.16585816}
 --- !u!61 &6142886
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -294,7 +309,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0.04271347, y: 0.6414787}
   serializedVersion: 2
@@ -373,7 +388,7 @@ Animator:
   m_GameObject: {fileID: 172896}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: df4f074d7f3376240887e4375442ac63, type: 2}
+  m_Controller: {fileID: 9100000, guid: 348840f178c905246898823ee2643fac, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -405,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ac6af36995a49469bd678d4ad333a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsMat: {fileID: 0}
   isDestroyed: 0
 --- !u!114 &11413558
 MonoBehaviour:
