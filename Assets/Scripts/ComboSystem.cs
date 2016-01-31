@@ -167,9 +167,9 @@ public class ComboSystem : MonoBehaviour {
         {
 
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
-            
+
             Debug.Log("Failed Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x , 15.0f, 0.0f), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x, 15.0f, 0.0f), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
