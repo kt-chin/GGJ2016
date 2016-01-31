@@ -16,9 +16,12 @@ public class ComboSystem : MonoBehaviour
     public Animator spellAnimation;
     private PlayerMovement playerMove;
 
+    public bool castingSpell;
     // Use this for initialization
-    void Start () {
 
+    void Start()
+    {
+        spellAnimation = GetComponent<Animator>() as Animator;
         audioReference = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
         playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         //castingSpell = false;
@@ -36,13 +39,14 @@ public class ComboSystem : MonoBehaviour
                 return u;
                 }
             }
-        if (lastFound != -1) lastSpellTried = lastFound;
         return lastFound;
         }
 
     // Update is called once per frame
     void Update()
     {
+        castingSpell = false;
+
         if (spellAnimation == null)
             spellAnimation = this.GetComponent<Animator>();
         if (spellNames == null || spellNames.Length == 0 || spellNames[0] == null)
@@ -66,23 +70,23 @@ public class ComboSystem : MonoBehaviour
         if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && !spells.ContainsKey(key))
         {
             int spellID = DetectSpellCast(key);
-            if (spellID == -1) spellID = lastSpellTried;
+            if (spellID == -1) spellID = 2;
             spells[spellNames[spellID]].Invoke();
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             timeUser = 0;
-            
+            castingSpell = false;
         }
         else if (timeUser > comboLimit)
         {
             timeUser = 0;
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
-           
+            castingSpell = false;
         }
 
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
             timeUser = 0;
-
+        //castingSpell = true;
         // Check for the Key Input pressed, we check the four arrow keys
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -91,7 +95,6 @@ public class ComboSystem : MonoBehaviour
             audioReference.audioSource.volume = 1.0f;
             audioReference.audioSource.Play();
             spellAnimation.Play("Up");
-
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -126,6 +129,7 @@ public class ComboSystem : MonoBehaviour
         {
             spells[key].Invoke();
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
+            castingSpell = false;
         }
 
         if (Input.GetKeyDown(KeyCode.O))
@@ -168,7 +172,7 @@ public class ComboSystem : MonoBehaviour
         if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
         {
             Debug.Log("Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 5.0f, 0.0f), "Rock(Clone)"), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Rock(Clone)"), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
@@ -176,7 +180,7 @@ public class ComboSystem : MonoBehaviour
         {
             
             Debug.Log("Failed Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x , 15.0f, 0.0f), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x, 15.0f, 0.0f), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
