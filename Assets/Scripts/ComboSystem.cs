@@ -8,7 +8,7 @@ public class ComboSystem : MonoBehaviour {
     public System.Collections.Generic.Dictionary<string, System.Action> spells;
     private float timeUser = 0;
     public float comboLimit;
-    public GameObject cloudPrefab;
+    public GameObject spellsPrefab;
     public string[] spellNames;
     private GameMaster audioReference;
     public Animator spellAnimation;
@@ -52,7 +52,7 @@ public class ComboSystem : MonoBehaviour {
 
         this.key = this.transform.GetChild(0).GetComponent<SpellHintScript>().key;
 
-        //Check for invalid inputs
+        //CHeck for invalid inputs
         if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5 ) && !spells.ContainsKey(key))
         {
             int spellID = DetectSpellCast(key);
@@ -67,7 +67,7 @@ public class ComboSystem : MonoBehaviour {
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
             GetComponent<Animator>().SetBool("CastingBool", false);
         }
-
+            
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
             timeUser = 0;
@@ -135,10 +135,10 @@ public class ComboSystem : MonoBehaviour {
     void fireCombo()
     {
 
-        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[0])
         {
             Debug.Log("Fire Spell !");
-            GameObject fb = (GameObject)Instantiate(cloudPrefab, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Vines(Clone)"), new Quaternion());
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(1).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 0.0f, 0.0f), "Vines(Clone)"), new Quaternion());
             fb.tag = "Obstacles";
             fb.GetComponent<Animator>().enabled = false;
         }
@@ -148,7 +148,7 @@ public class ComboSystem : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
 
             Debug.Log("Failed fire Spell !");
-            GameObject fb = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x, 15.0f, 0.0f), new Quaternion());
+            GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(1).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
             fb.tag = "Obstacles";
             fb.GetComponent<Animator>().enabled = false;
         }
@@ -159,7 +159,7 @@ public class ComboSystem : MonoBehaviour {
         if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key == spellNames[2])
         {
             Debug.Log("Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(cloudPrefab, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Rock(Clone)"), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, tryToSnap(new Vector3(this.transform.position.x + 15.0f, 15.0f, 0.0f), "Rock(Clone)"), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
@@ -167,9 +167,9 @@ public class ComboSystem : MonoBehaviour {
         {
 
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
-
+            
             Debug.Log("Failed Air Spell !");
-            GameObject cloud = (GameObject)Instantiate(cloudPrefab, new Vector3(this.transform.position.x, 15.0f, 0.0f), new Quaternion());
+            GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x , 15.0f, 0.0f), new Quaternion());
             cloud.tag = "Obstacles";
             cloud.GetComponent<Animator>().enabled = false;
         }
