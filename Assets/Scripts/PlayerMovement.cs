@@ -13,12 +13,16 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     public GameMaster soundHandler;
 
+    public bool waitingToDie;
+
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         soundHandler = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
+        waitingToDie = false;
+        
     }
 
     // Update is called once per frame
@@ -35,6 +39,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
         }
 
 
@@ -54,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
             grounded = false;
         }
 
+        if (waitingToDie)
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            return;
+        }
         if (move)
         {
             GetComponent<Animator>().SetBool("IsIdle", false);
