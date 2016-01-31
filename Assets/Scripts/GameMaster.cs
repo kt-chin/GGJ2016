@@ -6,6 +6,11 @@ public class GameMaster : MonoBehaviour {
 	public static GameMaster GM;
     public static string[] spellNames;
     public static int spellNumber = 4;
+    public AudioClip[] playerSound;
+    public AudioSource audioSource;
+    public bool playerDead = false;
+    private bool playedDeath = false;
+
 
 	void Start(){
 		if (GM == null) {
@@ -13,9 +18,10 @@ public class GameMaster : MonoBehaviour {
 		}
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
         {
-            spellNames = new string[spellNumber];
-            randomizeSpells();
-        }
+        spellNames = new string[spellNumber];
+        audioSource = GetComponent<AudioSource>();
+        randomizeSpells();
+    }
     }
     
 	public GameObject playerPrefab;
@@ -23,20 +29,45 @@ public class GameMaster : MonoBehaviour {
 	public int spawnDelay = 2;
 	public Transform SpawnParticalPrefab;
 	public Transform enemySpawn;
-
 	public IEnumerator RespawnPlayer (){
 		Debug.Log ("SpawnSound");
 		yield return new WaitForSeconds (spawnDelay);
 		Instantiate (playerPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation);
 		GameObject SpawnParticalClone = Instantiate (SpawnParticalPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation) as GameObject;
 		Destroy (SpawnParticalClone, 3f);
+        playerDead = false;
+        playedDeath = false;
+       
 	}
+    void Update()
+    {
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            //return;
+            playerDead = true;
+
+        }
+        if (playerDead)
+        {
+            if (playedDeath == false)
+            {
+                audioSource.clip = playerSound[5];
+                audioSource.volume = 1.0f;
+                audioSource.Play();
+                playedDeath = true;
+            }
+
+        }
+
+        
+    }
 
 
 	public static void KillPlayer(){
         if (GameObject.FindGameObjectWithTag("Player") == null || GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit == null) return;
         spawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit.transform;
 		Destroy (GameObject.FindGameObjectWithTag("Player").gameObject);
+        
 		GM.StartCoroutine (GM.RespawnPlayer ());
 	}
 
