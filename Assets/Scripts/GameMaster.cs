@@ -11,6 +11,7 @@ public class GameMaster : MonoBehaviour
     public AudioSource audioSource;
     public bool playerDead = false;
     private bool playedDeath = false;
+    public static GameObject lastPlatformHit;
 
 
     void Start()
@@ -18,7 +19,9 @@ public class GameMaster : MonoBehaviour
         if (GM == null)
         {
 			GM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
-		}
+           playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
+        }
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
         {
         spellNames = new string[spellNumber];
@@ -32,6 +35,7 @@ public class GameMaster : MonoBehaviour
 	public int spawnDelay = 2;
 	public Transform SpawnParticalPrefab;
 	public Transform enemySpawn;
+    private static PlayerMovement playerMove;
     public IEnumerator RespawnPlayer()
     {
         Debug.Log("SpawnSound");
@@ -62,15 +66,21 @@ public class GameMaster : MonoBehaviour
             }
             
         }
+
+        if (GameObject.FindGameObjectWithTag("Player") == null) return;
+        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
 
     public static void KillPlayer()
     {
-        if (GameObject.FindGameObjectWithTag("Player") == null || GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit == null) return;
-        spawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit.transform;
+        if (lastPlatformHit == null) return;
+        spawnPoint = lastPlatformHit.transform;
         Destroy(GameObject.FindGameObjectWithTag("Player").gameObject);
-        
+
+
+        playerMove = null;
+
         GM.StartCoroutine(GM.RespawnPlayer());
 	}
 

@@ -12,11 +12,15 @@ public class ComboSystem : MonoBehaviour
     public GameObject spellsPrefab;
     public string[] spellNames;
     private GameMaster audioReference;
+    public int lastSpellTried;
+    public Animator spellAnimation;
+    private PlayerMovement playerMove;
 
     // Use this for initialization
     void Start () {
 
         audioReference = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
+        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         //castingSpell = false;
     }
 
@@ -39,6 +43,8 @@ public class ComboSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spellAnimation == null)
+            spellAnimation = this.GetComponent<Animator>();
         if (spellNames == null || spellNames.Length == 0 || spellNames[0] == null)
         {
                 spellNames = GameMaster.spellNames;
@@ -70,13 +76,13 @@ public class ComboSystem : MonoBehaviour
         {
             timeUser = 0;
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
-            GetComponent<Animator>().SetBool("CastingBool", false);
+           
         }
 
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
             timeUser = 0;
-            GetComponent<Animator>().SetBool("CastingBool", true);
+
         // Check for the Key Input pressed, we check the four arrow keys
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -150,8 +156,6 @@ public class ComboSystem : MonoBehaviour
         else
         {
 
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
-
             Debug.Log("Failed fire Spell !");
             GameObject fb = (GameObject)Instantiate(spellsPrefab.transform.GetChild(1).gameObject, new Vector3(this.transform.position.x, 0.0f, 0.0f), new Quaternion());
             fb.tag = "Obstacles";
@@ -170,8 +174,6 @@ public class ComboSystem : MonoBehaviour
         }
         else
         {
-
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().waitingToDie = true;
             
             Debug.Log("Failed Air Spell !");
             GameObject cloud = (GameObject)Instantiate(spellsPrefab.transform.GetChild(0).gameObject, new Vector3(this.transform.position.x , 15.0f, 0.0f), new Quaternion());

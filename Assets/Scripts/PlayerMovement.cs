@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     public GameMaster soundHandler;
 
-    public bool waitingToDie;
+
 
     // Use this for initialization
     void Start()
@@ -21,8 +21,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         soundHandler = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
-        waitingToDie = false;
-        
+
     }
 
     // Update is called once per frame
@@ -62,11 +61,7 @@ public class PlayerMovement : MonoBehaviour
             grounded = false;
         }
 
-        if (waitingToDie)
-        {
-            rb.velocity = new Vector3(0, 0, 0);
-            return;
-        }
+
         if (move)
         {
             GetComponent<Animator>().SetBool("IsIdle", false);
@@ -79,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             float moveHorizontal = Input.GetAxis("Horizontal");
-            if (Mathf.Abs(moveHorizontal) > 0)
+            if (Mathf.Abs(moveHorizontal) > 0 && GetComponent<Animator>().GetBool("IsIdle"))
                 GetComponent<Animator>().SetBool("IsIdle", false);
             if (Input.GetAxis("Horizontal") != 0)
                 rb.velocity = new Vector3(moveHorizontal * speed, rb.velocity.y, 0);
@@ -94,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         {
             grounded = true;
             lastPlatformHit = collider.gameObject;
+            GameMaster.lastPlatformHit = collider.gameObject;
         }
     }
     void OnCollisionExit2D(Collision2D collider)
