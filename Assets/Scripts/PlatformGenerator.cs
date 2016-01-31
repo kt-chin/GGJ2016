@@ -10,7 +10,7 @@ public class PlatformGenerator : MonoBehaviour {
     private int rockChance = 0;
     private int vinesChance = 0;
     private int fieryThingChance = 0;
-    private int windyThingChance = 0;
+    private int bearTrapChance = 0;
     private int obstacleProtection = -1;
 
 
@@ -72,11 +72,11 @@ public class PlatformGenerator : MonoBehaviour {
             fieryThingChance = 0;
             obstacleProtection = 2;
         }
-        else if (currentLevel > 2 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel) + (windyThingChance * 1 / currentLevel))
+        else if (currentLevel > 2 && myRandomValue < (rockChance * 1 / currentLevel) + (vinesChance * 1 / currentLevel) + (fieryThingChance * 1 / currentLevel) + (bearTrapChance * 1 / currentLevel))
         {
             CreateNormalPlatform(5.0f, 4.0f);
-            CreateWindyThing();
-            windyThingChance = 0;
+            CreateBearTrap();
+            bearTrapChance = 0;
             obstacleProtection = 2;
         }
         else
@@ -95,7 +95,7 @@ public class PlatformGenerator : MonoBehaviour {
         if (currentLevel == 2)
             fieryThingChance += 15 + (int)(fieryThingChance * 0.10f);
         if (currentLevel == 3)
-            windyThingChance += 15 + (int)(windyThingChance * 0.10f);
+            bearTrapChance += 15 + (int)(bearTrapChance * 0.10f);
     }
 
     void CreateNormalPlatform(float xPos = -1.0f, float xLength = -1.0f)
@@ -141,14 +141,14 @@ public class PlatformGenerator : MonoBehaviour {
     {
         GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(2).gameObject, LastPlatform.transform.position, new Quaternion());
         float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
-        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y - sizeY, LastPlatform.transform.position.z);
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y + sizeY, LastPlatform.transform.position.z);
         newRock.transform.parent = this.transform;
     }
-    void CreateWindyThing()
+    void CreateBearTrap()
     {
         GameObject newRock = (GameObject)Instantiate(obstaclesPrefab.transform.GetChild(3).gameObject, LastPlatform.transform.position, new Quaternion());
         float sizeY = newRock.GetComponent<Renderer>().bounds.size.y / 2;
-        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y - sizeY, LastPlatform.transform.position.z);
+        newRock.transform.position = new Vector3(LastPlatform.transform.position.x, LastPlatform.transform.position.y + 15, LastPlatform.transform.position.z);
         newRock.transform.parent = this.transform;
     }
 
