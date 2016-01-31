@@ -47,7 +47,7 @@ public class PlatformGenerator : MonoBehaviour {
             return;
         }
 
-        int randomElement = Mathf.RoundToInt(Random.value) * currentLevel;
+        int randomElement = Mathf.RoundToInt(Random.value) * (currentLevel-2);
 
         int myRandomValue = (int)(Random.value * 100);
         if (myRandomValue < obstacleChance)

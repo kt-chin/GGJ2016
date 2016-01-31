@@ -61,7 +61,7 @@ public class ComboSystem : MonoBehaviour
         this.key = this.transform.GetChild(0).GetComponent<SpellHintScript>().key;
 
         //CHeck for invalid inputs
-        if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && System.Array.IndexOf<string>(spellNames, key) == -1)
+        if ((timeUser > comboLimit && key.Length >= 4 || key.Length == 5) && System.Array.IndexOf<string>(spellNames, key) == -1 && this.transform.GetChild(0).GetComponent<SpellHintScript>().key != "")
         {
             int spellID = DetectSpellCast(key);
             if (spellID == -1) spellID = lastSpellTried;
@@ -120,7 +120,7 @@ public class ComboSystem : MonoBehaviour
         if (spellNames == null || spellNames.Length == 0)
             GameMaster.randomizeSpells();
         spellNames = GameMaster.spellNames;
-        if (System.Array.IndexOf<string>(spellNames, key) != -1)
+        if (this.transform.GetChild(0).GetComponent<SpellHintScript>().key != "" && System.Array.IndexOf<string>(spellNames, key) != -1)
         {
             InvokeSpell(DetectSpellCast(key));
             this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
@@ -144,6 +144,7 @@ public class ComboSystem : MonoBehaviour
             case 2: airCombo(); break;
             case 3: earthCombo(); break;
         }
+        this.transform.GetChild(0).GetComponent<SpellHintScript>().key = "";
     }
 
     void waterCombo()
