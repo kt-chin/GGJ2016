@@ -10,11 +10,12 @@ public class ComboSystem : MonoBehaviour {
     public float comboLimit;
     public GameObject cloudPrefab;
     private string[] spellNames;
+    private GameMaster audioReference;
 
     // Use this for initialization
     void Start () {
 
-
+        audioReference = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
     }
 
     int DetectSpellCast()
@@ -60,6 +61,7 @@ public class ComboSystem : MonoBehaviour {
             spells[spellNames[DetectSpellCast()]].Invoke();
             key = "";
             timeUser = 0;
+            
         }
 
             // Check if the user has stop input key during a specified time
@@ -74,21 +76,30 @@ public class ComboSystem : MonoBehaviour {
         {
             key += "U";
             timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[1];
+            audioReference.audioSource.Play();
+
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             key += "D";
             timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[2];
+            audioReference.audioSource.Play();
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             key += "L";
             timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[3];
+            audioReference.audioSource.Play();
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             key += "R";
             timeUser = 0;
+            audioReference.audioSource.clip = audioReference.playerSound[4];
+            audioReference.audioSource.Play();
         }
 
         // We check if the accumulated string is the same as element combo

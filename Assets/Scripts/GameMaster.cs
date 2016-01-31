@@ -6,12 +6,15 @@ public class GameMaster : MonoBehaviour {
 	public static GameMaster GM;
     public string[] spellNames;
     public int spellNumber = 4;
+    public AudioClip[] playerSound;
+    public AudioSource audioSource;
 
-	void Start(){
+    void Start(){
 		if (GM == null) {
 			GM = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
 		}
         spellNames = new string[spellNumber];
+        audioSource = GetComponent<AudioSource>();
         randomizeSpells();
     }
     
@@ -28,12 +31,17 @@ public class GameMaster : MonoBehaviour {
 		GameObject SpawnParticalClone = Instantiate (SpawnParticalPrefab, spawnPoint.position + new Vector3(0, 8, 0), spawnPoint.rotation) as GameObject;
 		Destroy (SpawnParticalClone, 3f);
 	}
+    void Update()
+    {
+        
+    }
 
 
 	public static void KillPlayer(){
         if (GameObject.FindGameObjectWithTag("Player") == null) return;
         spawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().lastPlatformHit.transform;
 		Destroy (GameObject.FindGameObjectWithTag("Player").gameObject);
+
 		GM.StartCoroutine (GM.RespawnPlayer ());
 	}
 

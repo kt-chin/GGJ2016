@@ -11,14 +11,14 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     public bool grounded = true;
     private Rigidbody2D rb;
-    public AudioClip[] playerSound;
-    private AudioSource audioSource;
+    public GameMaster soundHandler;
+
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        audioSource= GetComponent<AudioSource>();
+        soundHandler = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
     }
 
     // Update is called once per frame
@@ -46,8 +46,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             rb.velocity = new Vector3(0, jumpY, 0);
-            audioSource.clip = playerSound[0];
-            audioSource.Play();
+            soundHandler.audioSource.clip = soundHandler.playerSound[0];
+            soundHandler.audioSource.Play();
             
             grounded = false;
         }
